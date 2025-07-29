@@ -1,0 +1,281 @@
+.datatable-wrapper {  
+  width: 100%;  
+  background: white;  
+  border-radius: 6px;  
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  
+}  
+  
+.datatable-wrapper.reflow {  
+  overflow-x: auto;  
+}  
+  
+.datatable-header {  
+  padding: 1rem;  
+  border-bottom: 1px solid #e9ecef;  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+}  
+  
+.filter-container {  
+  position: relative;  
+  display: flex;  
+  align-items: center;  
+}  
+  
+.filter-container .pi {  
+  position: absolute;  
+  left: 0.75rem;  
+  color: #6c757d;  
+}  
+  
+.global-filter {  
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;  
+  border: 1px solid #ced4da;  
+  border-radius: 4px;  
+  font-size: 0.875rem;  
+  width: 250px;  
+}  
+  
+.datatable {  
+  width: 100%;  
+  border-collapse: collapse;  
+}  
+  
+.datatable th,  
+.datatable td {  
+  padding: 0.75rem;  
+  text-align: left;  
+  border-bottom: 1px solid #e9ecef;  
+}  
+  
+.datatable th {  
+  background-color: #f8f9fa;  
+  font-weight: 600;  
+  color: #495057;  
+}  
+  
+.datatable th.sortable {  
+  cursor: pointer;  
+  user-select: none;  
+}  
+  
+.datatable th.sortable:hover {  
+  background-color: #e9ecef;  
+}  
+  
+.sort-icon {  
+  margin-left: 0.5rem;  
+  font-size: 0.75rem;  
+}  
+  
+.datatable tr:hover {  
+  background-color: #f8f9fa;  
+}  
+  
+.datatable tr.selected {  
+  background-color: #e3f2fd;  
+}  
+  
+.selection-column {  
+  width: 3rem;  
+  text-align: center;  
+}  
+  
+.expansion-column {  
+  width: 2rem;  
+  text-align: center;  
+}  
+  
+.row-toggler {  
+  background: none;  
+  border: 1px solid #ced4da;  
+  border-radius: 4px;  
+  width: 1.5rem;  
+  height: 1.5rem;  
+  cursor: pointer;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+}  
+  
+.expanded-row td {  
+  background-color: #f8f9fa;  
+  padding: 1rem;  
+}  
+  
+.datatable-paginator {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 1rem;  
+  border-top: 1px solid #e9ecef;  
+}  
+  
+.paginator-left {  
+  display: flex;  
+  align-items: center;  
+  gap: 1rem;  
+}  
+  
+.paginator-left select {  
+  padding: 0.25rem 0.5rem;  
+  border: 1px solid #ced4da;  
+  border-radius: 4px;  
+}  
+  
+.paginator-info {  
+  font-size: 0.875rem;  
+  color: #6c757d;  
+}  
+  
+.paginator-right {  
+  display: flex;  
+  gap: 0.25rem;  
+}  
+  
+.paginator-button {  
+  padding: 0.375rem 0.75rem;  
+  border: 1px solid #ced4da;  
+  background: white;  
+  cursor: pointer;  
+  border-radius: 4px;  
+  font-size: 0.875rem;  
+}  
+  
+.paginator-button:hover:not(:disabled) {  
+  background-color: #e9ecef;  
+}  
+  
+.paginator-button:disabled {  
+  opacity: 0.5;  
+  cursor: not-allowed;  
+}  
+  
+.paginator-button.active {  
+  background-color: #007bff;  
+  color: white;  
+  border-color: #007bff;  
+}  
+  
+/* Responsive */  
+@media (max-width: 768px) {  
+  .datatable-wrapper.reflow .datatable {  
+    min-width: 600px;  
+  }  
+    
+  .datatable-paginator {  
+    flex-direction: column;  
+    gap: 1rem;  
+    align-items: stretch;  
+  }  
+    
+  .paginator-left,  
+  .paginator-right {  
+    justify-content: center;  
+  }  
+}  
+  
+/* Estilos adicionales basados en el arquetipo Verona */  
+.datatable th {  
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;  
+}  
+  
+.datatable tbody tr {  
+  transition: background-color 0.2s, color 0.2s;  
+}  
+  
+.datatable tbody tr:nth-child(odd) {  
+  background-color: #fbfcfc;  
+}  
+  
+.datatable tbody tr:nth-child(odd):hover {  
+  background-color: #e9ecef;  
+}  
+  
+.datatable tbody tr.selected {  
+  background-color: #007bff !important;  
+  color: #ffffff;  
+}  
+  
+/* Variantes de tamaño */  
+.datatable.datatable-sm th,  
+.datatable.datatable-sm td {  
+  padding: 0.5rem;  
+}  
+  
+.datatable.datatable-lg th,  
+.datatable.datatable-lg td {  
+  padding: 1.25rem;  
+}  
+  
+/* Bordes de grilla */  
+.datatable.datatable-gridlines th,  
+.datatable.datatable-gridlines td {  
+  border: 1px solid #e9ecef;  
+}  
+  
+/* Estados de hover y focus */  
+.datatable th:hover {  
+  background-color: #e9ecef;  
+}  
+  
+.datatable tbody tr:hover {  
+  background-color: #f8f9fa;  
+}  
+  
+/* Iconos PrimeIcons */  
+.pi {  
+  font-family: 'primeicons';  
+  font-style: normal;  
+  font-weight: normal;  
+  display: inline-block;  
+}  
+  
+.pi-search:before {  
+  content: '\e908';  
+}  
+  
+/* Estilos para filas expandidas */  
+.expanded-row {  
+  border-top: 1px solid #dee2e6;  
+}  
+  
+.expanded-row td {  
+  background-color: #f8f9fa;  
+  border-bottom: 1px solid #dee2e6;  
+}  
+  
+/* Estilos para mensaje vacío */  
+.datatable tbody tr td[colspan] {  
+  text-align: center;  
+  color: #6c757d;  
+  font-style: italic;  
+  padding: 2rem;  
+}  
+  
+/* Estilos para botones del paginador */  
+.paginator-button:first-child,  
+.paginator-button:last-child {  
+  font-weight: bold;  
+}  
+  
+/* Focus states */  
+.global-filter:focus {  
+  outline: none;  
+  border-color: #80bdff;  
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);  
+}  
+  
+.paginator-button:focus {  
+  outline: none;  
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);  
+}  
+  
+/* Sticky header support */  
+.datatable-wrapper.sticky-header .datatable thead th {  
+  position: sticky;  
+  top: 0;  
+  z-index: 10;  
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);  
+}

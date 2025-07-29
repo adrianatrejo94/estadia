@@ -1,0 +1,398 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 19 jun 2024, 19:15:34
+    Author     : jbecerril
+*/
+
+
+.sinBordes{
+    border: hidden!important;
+    border-style: hidden!important;
+}
+.sinBordes> .ui-widget-content{
+    border: hidden!important;
+    border-style: hidden!important;
+}
+.sinBordesFondo> .ui-widget-content{
+    border: hidden!important;
+    border-style: hidden!important;
+    background-color: transparent!important;
+}
+
+.enrolamiento> .ui-accordion-content {
+    padding: 0!important;
+}
+
+.ui-datatable .ui-datatable-header{
+    padding:  5px 5px !important; 
+}
+.centrado{
+    text-align: center!important;
+}
+
+.ui-column-filter{
+    display: none!important;
+}
+.sinCabecera .ui-dialog-titlebar{
+    border: hidden!important;
+    background: transparent!important;
+    box-shadow: none!important;
+}
+
+.sinBordes{
+    border: hidden!important;
+    border-style: hidden!important;
+}
+
+.sinBordesFondo{
+    border: hidden!important;
+    border-style: hidden!important;
+    background-color: transparent!important;
+}
+
+.ui-column-filter{
+    display: none!important;
+}
+
+.sinFondo{
+    background-color: transparent!important;
+}
+.centrado{
+    text-align: center!important;
+}
+
+.izquierda{
+    text-align: left!important;
+}
+
+.sobremodal{
+    z-index: 2000!important;
+}
+.ui-datatable .ui-datatable-header{
+    padding:  5px 5px !important; 
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+
+    border-style: none!important;
+
+}
+.menu-pin-button{
+    display: none!important;
+}
+
+.card .card-w-title{
+    border: none!important;   
+}
+
+.dialogo-contrasena{
+    text-align: justify;
+}
+
+.estiloTarjeta{
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    border-radius: 5px;
+}
+
+.estiloTarjetaTablero{
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.estiloTarjetaTableroPie{
+    text-align: center;
+    color: #ffffff;
+    padding: inherit;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+@media (min-width: 1025px) {
+    /*CONFIGURACION DE SOLICITUD*/
+    .tarjetaConfiguracionRiesgo{
+        background: #fcae48;
+        height: 170px;
+    }
+    .tarjetaAdministracionRiesgo {
+        background: #ce8dff;
+        height: 170px;
+    }
+    .tarjetaConfiguracionMensajes{
+        background: #00d69a;
+        height: 170px;
+    }
+    .tarjetaConfiguracionTiempo{
+        background: #0099ff;
+        height: 170px;
+    }
+    /*TABLERO*/
+    .tarjetaTableroRecibidas{
+        background: #ffcc00;
+        height: 80px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroAprobadas{
+        background: #66cc33;
+        height: 80px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroRechazadas{
+        background: #ff0000;
+        height: 80px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroPendientes{
+        background: #0066cc;
+        height: 80px;
+        opacity: 0.7;
+    }
+    
+    .tarjetaTableroRecibidasPie{
+        background: #ffcc00;
+        height: 20px;
+    }
+    .tarjetaTableroAprobadasPie{
+        background: #66cc33;
+        height: 20px;
+    }
+    .tarjetaTableroRechazadasPie{
+        background: #ff0000;
+        height: 20px;
+    }
+    .tarjetaTableroPendientesPie{
+        background: #0066cc;
+        height: 20px;
+    }
+    .imagenesTarjetasTablero{
+        margin-top: 0px;
+        height: 30%;
+    }
+    /*GENERAL*/
+    .tarjetaSinColor{
+    background: grey;
+    opacity: 0.7;
+    height: 170px;
+    }
+    .imagenesTarjetas{
+        margin-top: 30px;
+        height: 30%;
+    }
+    .tablaCentro{
+        width: 60%;
+        margin-inline: auto;
+    }
+}
+
+@media (max-width: 1024px) {
+    /*CONFIGURACION DE SOLICITUD*/
+    .tarjetaConfiguracionRiesgo{
+        background: #fcae48;
+        height: 140px;
+    }
+    .tarjetaAdministracionRiesgo {
+        background: #ce8dff;
+        height: 140px;
+    }
+    .tarjetaConfiguracionMensajes{
+        background: #00d69a;
+        height: 140px;
+    }
+    .tarjetaConfiguracionTiempo{
+        background: #0099ff;
+        height: 140px;
+    }
+    /*TABLERO*/
+    .tarjetaTableroRecibidas{
+        background: #ffcc00;
+        height: 90px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroAprobadas{
+        background: #66cc33;
+        height: 90px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroRechazadas{
+        background: #ff0000;
+        height: 90px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroPendientes{
+        background: #0066cc;
+        height: 90px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroRecibidasPie{
+        background: #ffcc00;
+        height: 20px;
+    }
+    .tarjetaTableroAprobadasPie{
+        background: #66cc33;
+        height: 20px;
+    }
+    .tarjetaTableroRechazadasPie{
+        background: #ff0000;
+        height: 20px;
+    }
+    .tarjetaTableroPendientesPie{
+        background: #0066cc;
+        height: 20px;
+    }
+    .imagenesTarjetasTablero{
+        height: 50%;
+    }
+    /*GENERAL*/
+    .tarjetaSinColor{
+        background: grey;
+        opacity: 0.7;
+        height: 140px;
+    }
+    .imagenesTarjetas{
+        margin-top: 10px;
+        height: 60px;
+    }
+    .valPad{    
+        padding:30% 0;
+    }
+    
+    .tablaCentro{
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    /*CONFIGURACION DE SOLICITUD*/
+    .tarjetaConfiguracionRiesgo{
+        background: #fcae48;
+        height: auto;
+    }
+    .tarjetaAdministracionRiesgo {
+        background: #ce8dff;
+        height: auto;
+    }
+    .tarjetaConfiguracionMensajes{
+        background: #00d69a;
+        height: auto;
+    }
+    .tarjetaConfiguracionTiempo{
+        background: #0099ff;
+        height: auto;
+    }
+    /*TABLERO*/
+    .tarjetaTableroRecibidas{
+        background: #ffcc00;
+        height: 70px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroAprobadas{
+        background: #66cc33;
+        height: 70px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroRechazadas{
+        background: #ff0000;
+        height: 70px;
+        opacity: 0.7;
+    }
+    .tarjetaTableroPendientes{
+        background: #0066cc;
+        height: 70px;
+        opacity: 0.7;
+    }
+    /*GENERAL*/
+    .tarjetaSinColor{
+    background: grey;
+    opacity: 0.7;
+    height: auto;
+    }
+    .tablaCentro{
+        width: 100%;
+    }
+}
+
+.panelWizard{
+    margin-inline: auto;
+}
+
+.ui-wizard-step-titles{
+    display: none!important;
+}
+
+.botonAgregarEliminar{
+    border: none!important;
+    background: none!important;
+    float: right!important;
+}
+
+.ui-editable-column{
+    background: transparent!important;
+    border-color: transparent!important;
+}
+
+
+
+.ui-inputswitch .ui-inputswitch-on.ui-state-active{
+    background-color: green!important;
+}
+
+.letraTiempoVida{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.ui-selectmanymenu.ui-inputfield .ui-selectlistbox-list 
+.ui-selectlistbox-item.ui-state-highlight, .ui-selectonelistbox.ui-inputfield 
+.ui-selectlistbox-list .ui-selectlistbox-item.ui-state-highlight{
+    border-left: none!important;
+}
+
+.fondoCheck{
+    background: none;
+    width: 40px;
+}
+
+.letraTarjeta{
+    font-weight: bold;
+}
+
+.botonColor> .ui-button.ui-state-default{
+    background: white!important;
+    border-bottom: 5px solid #ffffff!important;
+}
+
+.botonColor> .ui-button.ui-state-hover{
+    background: white!important;
+    border-bottom: 5px solid #ffffff!important;
+}
+
+.sinBordesSubir> .ui-widget-header{
+    border: hidden!important;
+    background: #ffffff!important;
+    border-style: hidden!important;
+}
+
+.loader{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 9999;
+    height:100vh;
+    transition: opacity 0.1s linear;
+    transform: translateX(-50%);
+    opacity: 0.7
+}
+
+ul > li > ul > li > a > .layout-menuitem-icon {
+    width: 1.6em !important;
+    text-align: start !important;
+}
