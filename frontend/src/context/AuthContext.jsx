@@ -57,10 +57,10 @@ export const AuthProvider = ({ children }) => {
   };  
   
   // Función de login - equivalente a entrar() en ControllerLogin  
-  const login = async (credentials) => {  
+  const login = async (usuario, password) => {  
     try {  
       setLoading(true);  
-      const response = await authService.login(credentials);  
+      const response = await authService.login(usuario, password);  
         
       if (response.user && response.token) {  
         // Verificar que el usuario esté activo  

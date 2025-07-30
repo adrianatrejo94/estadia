@@ -18,7 +18,7 @@ import { RolesModule } from './roles/roles.module';
       password: process.env.DB_PASSWORD ?? 'w4JAwQJi9',
       database: process.env.DB_NAME ?? 'basedatos',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
     }),
     AuthModule,

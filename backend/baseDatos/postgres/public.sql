@@ -119,7 +119,7 @@ CREATE TABLE "public"."cat_usuarios" (
 -- ----------------------------
 -- Records of cat_usuarios
 -- ----------------------------
-INSERT INTO "public"."cat_usuarios" VALUES (2, 1, 'cesar', 'montiel', 'becerril', 'cesar.montiel', 'e06cd275a84459e303bd8174b9064578e0cf23153b4ebfcbcc33016ec0d92f976184ca545c6d1f27a84b0c6da0761804b88b750cabfebbda3b4d780b26e66264', 't', 'julio.montiel@hotmail.com', '5566770590', 't');
+INSERT INTO "public"."cat_usuarios" VALUES (2, 1, 'cesar', 'montiel', 'becerril', 'cesar.montiel', 'fa585d89c851dd338a70dcf535aa2a92fee7836dd6aff1226583e88e0996293f16bc009c652826e0fc5c706695a03cddce372f139eff4d13959da6f1f5d3eabe', 't', 'julio.montiel@hotmail.com', '5566770590', 't');
 INSERT INTO "public"."cat_usuarios" VALUES (3, 2, 'demo', 'demo', 'demo', 'demo.demo', 'e239f67756bba3af660e4226c340183a9ca4bdc40038c0cfdea2fbaa59605be32548df2535e5a9f9ceedb12d9666c6fb153ada99830ed5cd84eb0c2c4d00260a', 't', 'demo@hotmail.com', '5587801084', 'f');
 INSERT INTO "public"."cat_usuarios" VALUES (1, 1, 'julio cesar', 'becerril', 'montiel', 'jbecerril', '3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2', 't', 'julio.montiel@hotmail.com', '5587801084', 't');
 

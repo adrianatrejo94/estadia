@@ -307,7 +307,7 @@ const Dashboard = () => {
               paginator   
               rows={5}   
               paginatorPosition="bottom"  
-              reflow={true}  
+              reflow="true"  
             >  
               <Column field="id" header="Id" sortable />  
               <Column field="category" header="Categoría" sortable />  
@@ -359,7 +359,252 @@ const Dashboard = () => {
               </li>  
             </ul>  
           </Panel>  
+        </div> 
+        {/* User Card - equivalente al user-card del original */}  
+        <div className="col-12 md:col-4">  
+          <div className="user-card">  
+            <div className="user-card-header">  
+              <img src="/verona-layout/images/dashboard/verona-photo.png" alt="Header" />  
+            </div>  
+            <div className="user-card-content">  
+              <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
+              <span className="user-card-name">{user?.nombres || 'Usuario'} {user?.apellidoPaterno || ''}</span>  
+              <span className="user-card-role">System Admin</span>  
+              <p>  
+                Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.   
+                Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.  
+                Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse.  
+              </p>  
+              <Button label="Connect" />  
+            </div>  
+            <div className="user-card-footer">  
+              <div className="grid">  
+                <div className="col-4">  
+                  <span>Issues</span>  
+                  <span>52</span>  
+                </div>  
+                <div className="col-4">  
+                  <span>Open</span>  
+                  <span>25</span>  
+                </div>  
+                <div className="col-4">  
+                  <span>Closed</span>  
+                  <span>27</span>  
+                </div>  
+              </div>  
+            </div>  
+          </div>  
         </div>  
+  
+        {/* Chat Interface - equivalente al chat del original */}  
+        <div className="col-12 md:col-8 chat">  
+          <Panel header="CHAT">  
+            <ul>  
+              <li className="clearfix message-from">  
+                <img src="/verona-layout/images/avatar2.png" alt="Avatar" />  
+                <span>Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.</span>  
+              </li>  
+              <li className="clearfix message-own">  
+                <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
+                <span>Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.</span>  
+              </li>  
+              <li className="clearfix message-from">  
+                <img src="/verona-layout/images/avatar2.png" alt="Avatar" />  
+                <span>Chillwave craft beer tote bag stumptown quinoa hashtag.</span>  
+              </li>  
+              <li className="clearfix message-own">  
+                <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
+                <span>Dreamcatcher locavore iPhone chillwave, occupy trust fund slow-carb distillery art party narwhal.</span>  
+              </li>  
+            </ul>  
+            <div className="new-message">  
+              <div className="message-attachment">  
+                <i className="pi pi-paperclip"></i>  
+              </div>  
+              <div className="message-input">  
+                <InputText placeholder="Write a message" />  
+              </div>  
+            </div>  
+          </Panel>  
+        </div>  
+  
+        {/* Timeline - equivalente al timeline del original */}  
+        <div className="col-12 lg:col-4">  
+          <div className="card timeline ui-fluid">  
+            <div className="grid">  
+              <div className="col-3">  
+                <span className="event-time">just now</span>  
+                <i className="pi pi-map-marker" style={{color:'#f7cb00'}}></i>  
+              </div>  
+              <div className="col-9">  
+                <span className="event-owner" style={{color:'#f7cb00'}}>Katherine May</span>  
+                <span className="event-text">Lorem ipsum dolor amet</span>  
+                <div className="event-content">  
+                  <img src="/verona-layout/images/dashboard/bridge.png" width="100" alt="Bridge" />  
+                </div>  
+              </div>  
+  
+              <div className="col-3">  
+                <span className="event-time">12h ago</span>  
+                <i className="pi pi-star" style={{color:'#985edb'}}></i>  
+              </div>  
+              <div className="col-9">  
+                <span className="event-owner" style={{color:'#985edb'}}>Brandon Santos</span>  
+                <span className="event-text">Ab nobis, magnam sunt eum. Laudantium, repudiandae, similique!</span>  
+              </div>  
+  
+              <div className="col-3">  
+                <span className="event-time">15h ago</span>  
+                <i className="pi pi-comment" style={{color:'#9fd037'}}></i>  
+              </div>  
+              <div className="col-9">  
+                <span className="event-owner" style={{color:'#9fd037'}}>Stephan Ward</span>  
+                <span className="event-text">Omnis veniam quibusdam ratione est repellat qui nam quisquam ab mollitia dolores.</span>  
+              </div>  
+  
+              <div className="col-3">  
+                <span className="event-time">2d ago</span>  
+                <i className="pi pi-globe" style={{color:'#f7cb00'}}></i>  
+              </div>  
+              <div className="col-9">  
+                <span className="event-owner" style={{color:'#f7cb00'}}>Jason Smith</span>  
+                <span className="event-text">Laudantium, repudiandae, similique!</span>  
+                <div className="event-content">  
+                  <img src="/verona-layout/images/dashboard/map.png" alt="Map" />  
+                </div>  
+              </div>  
+  
+              <div className="col-12">  
+                <Button label="Refresh" icon="pi pi-refresh" />  
+              </div>  
+            </div>  
+          </div>  
+        </div>  
+  
+        {/* DataTable y Sales Graph - equivalente al original */}  
+        <div className="col-12 lg:col-8">  
+          <div className="card">  
+            <DataTable   
+              value={products}   
+              paginator   
+              rows={5}   
+              paginatorPosition="bottom"  
+              reflow="true"  
+            >  
+              <Column field="id" header="Id" sortable />  
+              <Column field="category" header="Category" sortable />  
+              <Column field="price" header="Price" body={priceBodyTemplate} sortable />  
+              <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable />  
+              <Column   
+                body={() => <Button icon="pi pi-search" />}   
+                style={{textAlign: 'center'}}  
+              />  
+            </DataTable>  
+  
+            <Panel header="SALES GRAPH" style={{overflow:'auto', marginTop: '20px'}}>  
+              <Chart type="line" data={chartData} options={chartOptions} style={{height: '300px'}} />  
+            </Panel>  
+          </div>  
+        </div>  
+  
+        {/* Verona Overview - equivalente al verona-overview del original */}  
+        <div className="col-12 lg:col-6">  
+          <div className="card verona-overview">  
+            <img src="/verona-layout/images/dashboard/verona-map.jpg" alt="Verona" />  
+            <span className="article-date">January 2017</span>  
+            <h3>VERONA</h3>  
+            <p>  
+              Verona is a city on the Adige river in Veneto, northern Italy,  
+              with approximately 265,000 inhabitants and one of the seven provincial capitals of the region.   
+              It is the second largest city municipality in the region and the third largest in northeast Italy.  
+            </p>  
+          </div>  
+        </div>  
+  
+        {/* Activity Feed - equivalente al activity-feed del original */}  
+        <div className="col-12 lg:col-6 activity-feed">  
+          <Panel header="ACTIVITY FEED">  
+            <h3>Last Activity</h3>  
+            <p>Updated 1 minute ago</p>  
+            <div className="grid">  
+              <div className="col-12 md:col-6">  
+                <span>INCOME</span>  
+                <div className="knob income">$900</div>  
+              </div>  
+              <div className="col-12 md:col-6">  
+                <span>TAX</span>  
+                <div className="knob tax">$250</div>  
+              </div>  
+              <div className="col-12 md:col-6">  
+                <span>INVOICES</span>  
+                <div className="knob invoice">$125</div>  
+              </div>  
+              <div className="col-12 md:col-6">  
+                <span>EXPENSES</span>  
+                <div className="knob expense">$250</div>  
+              </div>  
+            </div>  
+          </Panel>  
+        </div>  
+  
+        {/* Calendar - equivalente al calendar del original */}  
+        <div className="col-12 md:col-8">  
+          <Panel header="CALENDAR" style={{height:'100%'}}>  
+            <Calendar   
+              value={new Date()}   
+              inline   
+              showWeek   
+              style={{width: '100%'}}  
+            />  
+          </Panel>  
+        </div>  
+  
+        {/* Activity List - equivalente al activity del original */}  
+        <div className="col-12 md:col-4">  
+          <Panel header="ACTIVITY" style={{height:'100%'}}>  
+            <div className="activity-header">  
+              <div className="grid">  
+                <div className="col-6">  
+                  <span style={{fontWeight:'bold'}}>Last Activity</span>  
+                  <p>Updated 1 minute ago</p>  
+                </div>  
+                <div className="col-6" style={{textAlign:'right'}}>  
+                  <Button icon="pi pi-refresh" />  
+                </div>  
+              </div>  
+            </div>  
+            <ul className="activity-list">  
+              <li>  
+                <div className="count">$900</div>  
+                <div className="grid">  
+                  <div className="col-6">Income</div>  
+                  <div className="col-6">95%</div>  
+                </div>  
+              </li>  
+              <li>  
+                <div className="count" style={{backgroundColor:'#9fd037'}}>$250</div>  
+                <div className="grid">  
+                  <div className="col-6">Tax</div>  
+                  <div className="col-6">24%</div>  
+                </div>  
+              </li>  
+              <li>  
+                <div className="count" style={{backgroundColor:'#ff9c59'}}>$125</div>  
+                <div className="grid">  
+                  <div className="col-6">Invoices</div>  
+                  <div className="col-6">55%</div>  
+                </div>  
+              </li>  
+              <li>  
+                <div className="count" style={{backgroundColor:'#985edb'}}>$250</div>  
+                <div className="grid">  
+                  <div className="col-6">Expenses</div>  
+                  <div className="col-6">15%</div>  
+                </div>  
+              </li>  
+            </ul>  
+          </Panel>  
+        </div>    
       </div>  
     </Template>  
   );  

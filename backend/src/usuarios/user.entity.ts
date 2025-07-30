@@ -9,16 +9,16 @@ import { Role } from '../roles/role.entity';
 
 @Entity('cat_usuarios')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id_usuario' })
   idUsuario: number;
 
   @Column()
   nombres: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'apellido_paterno', nullable: true })
   apellidoPaterno: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'apellido_materno', nullable: true })
   apellidoMaterno: string;
 
   @Column({ unique: true })
@@ -36,13 +36,13 @@ export class User {
   @Column({ nullable: true })
   telefono: string;
 
-  @Column({ default: true })
+  @Column({ name: 'primer_inicio', default: true })
   primerInicio: boolean;
 
-  @Column({ nullable: true })
-  passTmp: string;
+  //@Column({ name: 'pass_tmp', nullable: true })
+  passTmp?: string;
 
-  @Column({ default: false })
+  //@Column({ default: false })
   update: boolean;
 
   @ManyToOne(() => Role)

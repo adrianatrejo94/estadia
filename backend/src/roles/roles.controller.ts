@@ -153,9 +153,9 @@ export class RolesController {
    * GET /api/roles/menus/available
    */
   @Get('menus/available')
-  async getAvailableMenus() {
+  getAvailableMenus() {
     try {
-      const menus = await this.rolesService.getAvailableMenus();
+      const menus = this.rolesService.getAvailableMenus();
       return {
         success: true,
         data: menus,
@@ -179,9 +179,9 @@ export class RolesController {
    * POST /api/roles/menus/available-excluding
    */
   @Post('menus/available-excluding')
-  async getAvailableMenusExcluding(@Body() body: { excludedIds: number[] }) {
+  getAvailableMenusExcluding(@Body() body: { excludedIds: number[] }) {
     try {
-      const menus = await this.rolesService.getAvailableMenusExcluding(
+      const menus = this.rolesService.getAvailableMenusExcluding(
         body.excludedIds || [],
       );
       return {

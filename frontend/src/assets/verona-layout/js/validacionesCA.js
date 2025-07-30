@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-
-
-
 function soloNumeros(evt) {
 
     // code is the decimal ASCII representation of the pressed key.
@@ -37,7 +34,8 @@ function soloMayusculas(e) {
     e.value = e.value.toUpperCase();
 }
 
-PrimeFaces.locales['es'] = {
+if (typeof PrimeFaces !== 'undefined') {
+    PrimeFaces.locales['es'] = {
     closeText: 'Cerrar',
     prevText: 'Anterior',
     nextText: 'Siguiente',
@@ -62,4 +60,5 @@ PrimeFaces.locales['es'] = {
     week: 'Semana',
     day: 'Día',
     allDayText: 'Todo el día'
+};
 }

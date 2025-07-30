@@ -17,29 +17,30 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
     const [showInactivityDialog, setShowInactivityDialog] = React.useState(false);
     const toast = useRef(null);
 
+    //comentado por mientras
     useEffect(() => {
         // Cargar scripts de Verona - equivalente a h:outputScript  
-        const scripts = [
-            '/verona-layout/js/layout.js',
-            '/verona-layout/js/prism.js',
-            '/verona-layout/js/validacionesCA.js'
-        ];
+        //const scripts = [
+          //  '/src/assets/verona-layout/js/layout.js',
+          //  '/src/assets/verona-layout/js/prism.js',
+          //  '/src/assets/verona-layout/js/validacionesCA.js'
+       // ];
 
-        const loadedScripts = scripts.map(src => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = true;
-            document.head.appendChild(script);
-            return script;
-        });
+       // const loadedScripts = scripts.map(src => {
+       //     const script = document.createElement('script');
+       //     script.src = src;
+       //     script.async = true;
+       //     document.head.appendChild(script);
+       //     return script;
+       // });
 
-        return () => {
-            loadedScripts.forEach(script => {
-                if (document.head.contains(script)) {
-                    document.head.removeChild(script);
-                }
-            });
-        };
+       // return () => {
+       //     loadedScripts.forEach(script => {
+       //         if (document.head.contains(script)) {
+       //             document.head.removeChild(script);
+       //         }
+       //     });
+       // };
     }, []);
 
     // Función global para mensajes - equivalente a p:growl  
@@ -92,8 +93,8 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
                                 ref={toast}
                                 position="top-right"
                                 life={8000}
-                                showDetail={true}
-                                showSummary={true}
+                                showDetail="true"
+                                showSummary="true"
                             />
 
                             {/* Contenido de la página */}

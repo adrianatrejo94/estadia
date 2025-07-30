@@ -11,6 +11,9 @@ import * as crypto from 'crypto';
  */
 @Injectable()
 export class AuthService {
+  verifyToken(authHeader: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private readonly usuariosService: UsuariosService,
     private readonly jwtService: JwtService,
