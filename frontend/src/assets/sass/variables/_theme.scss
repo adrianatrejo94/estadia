@@ -1,3 +1,22 @@
+// Variables primarias que deben definirse ANTES del mapa de colores  
+$primaryColor: #4caf50 !default;  
+$primaryTextColor: #ffffff !default;  
+$primaryLightColor: rgba(76, 175, 80, 0.16) !default;  
+$primaryDarkColor: #388e3c !default;  
+$primaryDarkerColor: #2e7d32 !default;  
+  
+// Variables de panel que también se necesitan  
+$panelContentBorder: 1px solid #dee2e6 !default;  
+$panelContentBg: #ffffff !default;  
+$panelContentTextColor: #495057 !default;  
+$panelContentPadding: 1rem !default;  
+$panelHeaderBorder: 1px solid #dee2e6 !default;  
+$panelHeaderBg: #f8f9fa !default;  
+$panelHeaderTextColor: #495057 !default;  
+$panelHeaderFontWeight: 700 !default;  
+$panelHeaderPadding: 1rem !default;  
+  
+
 $colors: (
   "blue": #2196F3,
   "green": #4caf50,

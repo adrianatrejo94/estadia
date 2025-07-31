@@ -1,5 +1,7 @@
 @use 'sass:math';
 
+@import '../../variables/theme';  
+
 @import './_mixins';
 @import './_common';
 @import './_colors';
