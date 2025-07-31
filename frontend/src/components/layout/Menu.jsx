@@ -4,26 +4,16 @@ import { useAuth } from '../../context/AuthContext';
 
 const Menu = () => {
     const navigate = useNavigate();
-    const { hasPermission, hasAnyPermission } = useAuth();  // Accede a funciones de permisos del usuario
-    const [activeMenus, setActiveMenus] = useState({});  // Estado local para saber qué submenús están activos
+    const { hasAnyPermission } = useAuth();  
 
-    // Función para cambiar de página
-    const handleNavigation = (path) => {
+    const handleNavegation = (path) => {
         navigate(path);
-    };
-
-    // Muestra/oculta submenús al hacer clic en una sección padre
-    const toggleSubmenu = (menuKey) => {
-        setActiveMenus(prev => ({
-            ...prev,
-            [menuKey]: !prev[menuKey]
-        }));
     };
 
     return (
         <div className="layout-menu-wrapper">   {/* Contenedor general del menú lateral */}
             <div className="layout-menu-container">   {/* Contenedor que define los estilos del menú */}
-                <form id="menuform">
+                {/* <form id="menuform"> */}
                     <ul className="layout-menu">  {/* Lista principal del menú */}
                         {/* Dashboard */}
                         <li role="menuitem">
@@ -41,20 +31,14 @@ const Menu = () => {
                         </li>
 
                         {/* Administración */}
-                        <li role="menuitem" className={activeMenus.admin ? 'active-menuitem' : ''}>
-                            <a
-                                href="#"
-                                className="ui-menuitem-link"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    toggleSubmenu('admin');
-                                }}
-                            >
+                        <li role="menuitem" id='menu-admin'>
+                            <a href="#" className="ui-menuitem-link">
+
                                 <span className="ui-menuitem-icon pi pi-fw pi-cog"></span>
                                 <span className="ui-menuitem-text">Administración</span>
                                 <span className="layout-submenu-toggler pi pi-fw pi-angle-down"></span>
                             </a>
-                            <ul style={{ display: activeMenus.admin ? 'block' : 'none' }}>
+                            <ul>
 
                                 {/* Submenú: Roles (solo si el usuario tiene permiso) */}
                                 {hasAnyPermission(['ROLE_BUSQUEDA_ROLES', 'ROLE_EDICION_ROLES', 'ROLE_ALTA_ROLES']) && (
@@ -89,20 +73,13 @@ const Menu = () => {
                                 </li>
 
                                 {/* Configuración Plataforma - Submenú anidado */}
-                                <li role="menuitem" className={activeMenus.config ? 'active-menuitem' : ''}>
-                                    <a
-                                        href="#"
-                                        className="ui-menuitem-link"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            toggleSubmenu('config');
-                                        }}
-                                    >
+                                <li role="menuitem" id="menu-config">
+                                    <a href="#" className="ui-menuitem-link">
                                         <span className="ui-menuitem-icon pi pi-fw pi-cog"></span>
                                         <span className="ui-menuitem-text">Configuración Plataforma</span>
                                         <span className="layout-submenu-toggler pi pi-fw pi-angle-down"></span>
                                     </a>
-                                    <ul style={{ display: activeMenus.config ? 'block' : 'none' }}>
+                                    <ul>
                                         <li role="menuitem">
                                             <a
                                                 href="#"
@@ -135,20 +112,13 @@ const Menu = () => {
                         </li>
 
                         {/* Administración Catálogos */}
-                        <li role="menuitem" className={activeMenus.catalogos ? 'active-menuitem' : ''}>
-                            <a
-                                href="#"
-                                className="ui-menuitem-link"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    toggleSubmenu('catalogos');
-                                }}
-                            >
+                        <li role="menuitem" id="menu-catalogos">
+                            <a href="#" className="ui-menuitem-link">
                                 <span className="ui-menuitem-icon pi pi-fw pi-cog"></span>
                                 <span className="ui-menuitem-text">Administración Catálogos</span>
                                 <span className="layout-submenu-toggler pi pi-fw pi-angle-down"></span>
                             </a>
-                            <ul style={{ display: activeMenus.catalogos ? 'block' : 'none' }}>
+                            <ul>
                                 <li role="menuitem">
                                     <a
                                         href="#"
@@ -192,20 +162,13 @@ const Menu = () => {
                         </li>
 
                         {/* Reportes */}
-                        <li role="menuitem" className={activeMenus.reportes ? 'active-menuitem' : ''}>
-                            <a
-                                href="#"
-                                className="ui-menuitem-link"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    toggleSubmenu('reportes');
-                                }}
-                            >
+                        <li role="menuitem" id="menu-reportes">
+                            <a href="#" className="ui-menuitem-link">
                                 <span className="ui-menuitem-icon pi pi-fw pi-compass"></span>
                                 <span className="ui-menuitem-text">Reportes</span>
                                 <span className="layout-submenu-toggler pi pi-fw pi-angle-down"></span>
                             </a>
-                            <ul style={{ display: activeMenus.reportes ? 'block' : 'none' }}>
+                            <ul>
                                 <li role="menuitem">
                                     <a
                                         href="#"
@@ -235,7 +198,7 @@ const Menu = () => {
                             </ul>
                         </li>
                     </ul>
-                </form>
+               {/* </form> */}
             </div>
         </div>
     );

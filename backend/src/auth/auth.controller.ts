@@ -1,4 +1,13 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Get,
+  Headers,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.services';
 import { LoginDto } from './auth.dto';
 
@@ -25,5 +34,21 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   logout() {
     return { success: true, message: 'Logout successful' };
+  }
+
+  @Get('verify')
+  async verify(@Headers('authorization') authHeader: string) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Token no válido');
+    }
+
+    const token = authHeader.substring(7);
+    const user = await this.authService.verifyToken(token);
+
+    if (!user) {
+      throw new UnauthorizedException('Token inválido');
+    }
+
+    return { user };
   }
 }

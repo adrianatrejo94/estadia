@@ -19,7 +19,7 @@ export const authService = {
 
       if (response.data.success) {
         // Guardar token y datos del usuario  
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
         return {
@@ -41,7 +41,6 @@ export const authService = {
 
   /**  
    * Cierra la sesión del usuario  
-   * Equivalente a ControllerLogin.salir()  
    */
   async logout() {
     try {
@@ -50,7 +49,7 @@ export const authService = {
       console.error('Error en logout:', error);
     } finally {
       // Limpiar datos locales  
-      localStorage.removeItem('token');
+      localStorage.removeItem('authToken');
       localStorage.removeItem('user');
     }
   },
@@ -59,7 +58,7 @@ export const authService = {
    * Verifica si el usuario está autenticado  
    */
   isAuthenticated() {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('authToken');
   },
 
 
@@ -68,7 +67,7 @@ export const authService = {
  */
   async verifyToken() {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('authToken');
       if (!token) return null;
 
       const response = await api.get('/auth/verify');

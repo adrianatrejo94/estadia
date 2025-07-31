@@ -98,7 +98,7 @@ const Dashboard = () => {
         <div className="col-12 md:col-6 lg:col-3">  
           <div className="grid card grid-nogutter overview-box overview-box-1">  
             <div className="col-4 overview-box-icon">  
-              <img src="/verona-layout/images/icon-paper.png" alt="Documentos" />  
+              <img src="src/assets/verona-layout/images/icon-paper.png" alt="Documentos" />  
             </div>  
             <div className="col-8">  
               <span className="overview-box-count">253</span>  
@@ -111,7 +111,7 @@ const Dashboard = () => {
         <div className="col-12 md:col-6 lg:col-3">  
           <div className="grid card grid-nogutter overview-box overview-box-2">  
             <div className="col-4 overview-box-icon">  
-              <img src="/verona-layout/images/icon-mail.png" alt="Emails" />  
+              <img src="src/assets/verona-layout/images/icon-mail.png" alt="Emails" />  
             </div>  
             <div className="col-8">  
               <span className="overview-box-count">3216</span>  
@@ -124,7 +124,7 @@ const Dashboard = () => {
         <div className="col-12 md:col-6 lg:col-3">  
           <div className="grid card grid-nogutter overview-box overview-box-3">  
             <div className="col-4 overview-box-icon">  
-              <img src="/verona-layout/images/icon-location.png" alt="Ubicaciones" />  
+              <img src="src/assets/verona-layout/images/icon-location.png" alt="Ubicaciones" />  
             </div>  
             <div className="col-8">  
               <span className="overview-box-count">428</span>  
@@ -137,7 +137,7 @@ const Dashboard = () => {
         <div className="col-12 md:col-6 lg:col-3">  
           <div className="grid card grid-nogutter overview-box overview-box-4">  
             <div className="col-4 overview-box-icon">  
-              <img src="/verona-layout/images/icon-orders.png" alt="Órdenes" />  
+              <img src="src/assets/verona-layout/images/icon-orders.png" alt="Órdenes" />  
             </div>  
             <div className="col-8">  
               <span className="overview-box-count">924</span>  
@@ -148,7 +148,7 @@ const Dashboard = () => {
         </div>  
   
         {/* Panel de tareas - equivalente al task panel del original */}  
-        <div className="col-12 md:col-6 lg:col-4">  
+        <div className="col-12 md:col-6 lg:col-4 task-list">  
           <Panel header="TAREAS" style={{ minHeight: '360px' }}>  
             <ul className="task-list">  
               {tasks.map(task => (  
@@ -205,7 +205,7 @@ const Dashboard = () => {
           <Panel header="CONTACTOS" style={{ minHeight: '360px' }}>  
             <ul>  
               <li className="clearfix">  
-                <img src="/verona-layout/images/avatar.png" width="45" alt="Avatar" />  
+                <img src="src/assets/verona-layout/images/avatar.png" width="45" alt="Avatar" />  
                 <div className="contact-info">  
                   <span className="name">Anna Fali</span>  
                   <span className="location">anna@pf-verona.com</span>  
@@ -217,7 +217,7 @@ const Dashboard = () => {
                 </div>  
               </li>  
               <li className="clearfix">  
-                <img src="/verona-layout/images/avatar3.png" width="45" alt="Avatar" />  
+                <img src="src/assets/verona-layout/images/avatar3.png" width="45" alt="Avatar" />  
                 <div className="contact-info">  
                   <span className="name">Tim Johnson</span>  
                   <span className="location">tim@pf-verona.com</span>  
@@ -236,10 +236,10 @@ const Dashboard = () => {
         <div className="col-12 md:col-4">  
           <div className="user-card">  
             <div className="user-card-header">  
-              <img src="/verona-layout/images/dashboard/verona-photo.png" alt="Header" />  
+              <img src="src/assets/verona-layout/images/dashboard/verona-photo.png" alt="Header" />  
             </div>  
             <div className="user-card-content">  
-              <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
+              <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />  
               <span className="user-card-name">Samantha Owens</span>  
               <span className="user-card-role">Administrador del Sistema</span>  
               <p>  
@@ -279,7 +279,7 @@ const Dashboard = () => {
                 <span className="event-owner" style={{ color: '#f7cb00' }}>Katherine May</span>  
                 <span className="event-text">Lorem ipsum dolor amet</span>  
                 <div className="event-content">  
-                  <img src="/verona-layout/images/dashboard/bridge.png" width="100" alt="Bridge" />  
+                  <img src="src/assets/verona-layout/images/dashboard/bridge.png" width="100" alt="Bridge" />  
                 </div>  
               </div>  
                 
@@ -360,157 +360,11 @@ const Dashboard = () => {
             </ul>  
           </Panel>  
         </div> 
-        {/* User Card - equivalente al user-card del original */}  
-        <div className="col-12 md:col-4">  
-          <div className="user-card">  
-            <div className="user-card-header">  
-              <img src="/verona-layout/images/dashboard/verona-photo.png" alt="Header" />  
-            </div>  
-            <div className="user-card-content">  
-              <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
-              <span className="user-card-name">{user?.nombres || 'Usuario'} {user?.apellidoPaterno || ''}</span>  
-              <span className="user-card-role">System Admin</span>  
-              <p>  
-                Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.   
-                Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.  
-                Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse.  
-              </p>  
-              <Button label="Connect" />  
-            </div>  
-            <div className="user-card-footer">  
-              <div className="grid">  
-                <div className="col-4">  
-                  <span>Issues</span>  
-                  <span>52</span>  
-                </div>  
-                <div className="col-4">  
-                  <span>Open</span>  
-                  <span>25</span>  
-                </div>  
-                <div className="col-4">  
-                  <span>Closed</span>  
-                  <span>27</span>  
-                </div>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-  
-        {/* Chat Interface - equivalente al chat del original */}  
-        <div className="col-12 md:col-8 chat">  
-          <Panel header="CHAT">  
-            <ul>  
-              <li className="clearfix message-from">  
-                <img src="/verona-layout/images/avatar2.png" alt="Avatar" />  
-                <span>Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.</span>  
-              </li>  
-              <li className="clearfix message-own">  
-                <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
-                <span>Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.</span>  
-              </li>  
-              <li className="clearfix message-from">  
-                <img src="/verona-layout/images/avatar2.png" alt="Avatar" />  
-                <span>Chillwave craft beer tote bag stumptown quinoa hashtag.</span>  
-              </li>  
-              <li className="clearfix message-own">  
-                <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
-                <span>Dreamcatcher locavore iPhone chillwave, occupy trust fund slow-carb distillery art party narwhal.</span>  
-              </li>  
-            </ul>  
-            <div className="new-message">  
-              <div className="message-attachment">  
-                <i className="pi pi-paperclip"></i>  
-              </div>  
-              <div className="message-input">  
-                <InputText placeholder="Write a message" />  
-              </div>  
-            </div>  
-          </Panel>  
-        </div>  
-  
-        {/* Timeline - equivalente al timeline del original */}  
-        <div className="col-12 lg:col-4">  
-          <div className="card timeline ui-fluid">  
-            <div className="grid">  
-              <div className="col-3">  
-                <span className="event-time">just now</span>  
-                <i className="pi pi-map-marker" style={{color:'#f7cb00'}}></i>  
-              </div>  
-              <div className="col-9">  
-                <span className="event-owner" style={{color:'#f7cb00'}}>Katherine May</span>  
-                <span className="event-text">Lorem ipsum dolor amet</span>  
-                <div className="event-content">  
-                  <img src="/verona-layout/images/dashboard/bridge.png" width="100" alt="Bridge" />  
-                </div>  
-              </div>  
-  
-              <div className="col-3">  
-                <span className="event-time">12h ago</span>  
-                <i className="pi pi-star" style={{color:'#985edb'}}></i>  
-              </div>  
-              <div className="col-9">  
-                <span className="event-owner" style={{color:'#985edb'}}>Brandon Santos</span>  
-                <span className="event-text">Ab nobis, magnam sunt eum. Laudantium, repudiandae, similique!</span>  
-              </div>  
-  
-              <div className="col-3">  
-                <span className="event-time">15h ago</span>  
-                <i className="pi pi-comment" style={{color:'#9fd037'}}></i>  
-              </div>  
-              <div className="col-9">  
-                <span className="event-owner" style={{color:'#9fd037'}}>Stephan Ward</span>  
-                <span className="event-text">Omnis veniam quibusdam ratione est repellat qui nam quisquam ab mollitia dolores.</span>  
-              </div>  
-  
-              <div className="col-3">  
-                <span className="event-time">2d ago</span>  
-                <i className="pi pi-globe" style={{color:'#f7cb00'}}></i>  
-              </div>  
-              <div className="col-9">  
-                <span className="event-owner" style={{color:'#f7cb00'}}>Jason Smith</span>  
-                <span className="event-text">Laudantium, repudiandae, similique!</span>  
-                <div className="event-content">  
-                  <img src="/verona-layout/images/dashboard/map.png" alt="Map" />  
-                </div>  
-              </div>  
-  
-              <div className="col-12">  
-                <Button label="Refresh" icon="pi pi-refresh" />  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-  
-        {/* DataTable y Sales Graph - equivalente al original */}  
-        <div className="col-12 lg:col-8">  
-          <div className="card">  
-            <DataTable   
-              value={products}   
-              paginator   
-              rows={5}   
-              paginatorPosition="bottom"  
-              reflow="true"  
-            >  
-              <Column field="id" header="Id" sortable />  
-              <Column field="category" header="Category" sortable />  
-              <Column field="price" header="Price" body={priceBodyTemplate} sortable />  
-              <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable />  
-              <Column   
-                body={() => <Button icon="pi pi-search" />}   
-                style={{textAlign: 'center'}}  
-              />  
-            </DataTable>  
-  
-            <Panel header="SALES GRAPH" style={{overflow:'auto', marginTop: '20px'}}>  
-              <Chart type="line" data={chartData} options={chartOptions} style={{height: '300px'}} />  
-            </Panel>  
-          </div>  
-        </div>  
   
         {/* Verona Overview - equivalente al verona-overview del original */}  
         <div className="col-12 lg:col-6">  
           <div className="card verona-overview">  
-            <img src="/verona-layout/images/dashboard/verona-map.jpg" alt="Verona" />  
+            <img src="src/assets/verona-layout/images/dashboard/verona-map.jpg" alt="Verona" />  
             <span className="article-date">January 2017</span>  
             <h3>VERONA</h3>  
             <p>  

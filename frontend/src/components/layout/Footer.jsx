@@ -9,7 +9,7 @@ const Footer = () => {
     <div className="footer clearfix">  
       {/* Logo */}  
       <img   
-        src="/verona-layout/images/logo-dark.png"   
+        src="src/assets/verona-layout/images/logo-dark.png"   
         alt="Logo Verona"  
       />  
         

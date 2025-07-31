@@ -2,24 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import { Dropdown } from 'primereact/dropdown';  
 import { Button } from 'primereact/button';  
-import { useAuth } from '../../context/AuthContext';  
+import { useAuth } from '../../context/AuthContext'; 
+import Menu from './Menu'; // Importar el componente Menu 
   
 /**  
- * Componente Topbar - Barra de navegación superior  
- *   
- * Funcionalidades principales:  
- * - Botón de menú hamburguesa  
- * - Logo de la aplicación  
- * - Selector de idioma  
- * - Información del usuario logueado  
- * - Menú desplegable con opciones de usuario  
+ * Componente Topbar - Barra de navegación superior   
  */  
 const Topbar = () => {  
   // Hook de navegación de React Router para cambiar de página  
   const navigate = useNavigate();  
     
   // Extraemos funciones y datos del contexto de autenticación  
-  // Equivalente a #{administradorPaginas} en el JSF original  
+    
   const {   
     user,                // Usuario actual logueado  
     language,            // Idioma actual (es_MX o en_US)  
@@ -30,7 +24,7 @@ const Topbar = () => {
   } = useAuth();  
     
   // Estado local para controlar la visibilidad del menú desplegable del usuario  
-  const [showUserMenu, setShowUserMenu] = useState(false);  
+  //const [showUserMenu, setShowUserMenu] = useState(false);  
   
   // Opciones de idioma - equivalente a f:selectItem en topbar_2.xhtml líneas 23-24  
   const languageOptions = [  
@@ -40,12 +34,9 @@ const Topbar = () => {
   
   /**  
    * Maneja el cambio de idioma  
-   * Equivalente a valueChangeListener="#{administradorPaginas.changeLang}"   
-   * y onchange="submit();" del original  
    */  
   const handleLanguageChange = (e) => {  
-    changeLanguage(e.value);  
-    // Equivalente a oncomplete="location.reload()" en el JSF original  
+    changeLanguage(e.value);    
     window.location.reload();  
   };  
   
@@ -53,18 +44,15 @@ const Topbar = () => {
    * Maneja el clic en la información del usuario  
    * Muestra/oculta el menú desplegable  
    */  
-  const handleUserDisplayClick = () => {  
-    setShowUserMenu(!showUserMenu);  
-  };  
+  //const handleUserDisplayClick = () => {  
+    //setShowUserMenu(!showUserMenu);  
+  //};  
   
-  /**  
-   * Maneja el cambio de contraseña  
-   * Equivalente a onclick="PF('dlgContrasena').show()" del original  
-   */  
+    
+  //Maneja el cambio de contraseña  
   const handlePasswordChange = () => {  
     // En React navegamos a una página en lugar de mostrar un diálogo modal  
     navigate('/cambio-contrasena');  
-    setShowUserMenu(false);  
   };  
   
   /**  
@@ -74,7 +62,6 @@ const Topbar = () => {
   const handlePreferences = () => {  
     // En React navegamos a una página en lugar de mostrar un diálogo modal  
     navigate('/preferencias');  
-    setShowUserMenu(false);  
   };  
   
   /**  
@@ -83,27 +70,22 @@ const Topbar = () => {
    */  
   const handleLogout = () => {  
     logout(); // Ejecuta la función de logout del AuthContext  
-    setShowUserMenu(false);  
   };  
   
   return (  
     // Contenedor principal del topbar - equivalente a <div class="topbar">  
-    <div className="topbar">  
-      {/* Formulario principal - equivalente a <h:form id="formTop"> */}  
-      <form id="formTop">  
-        {/* Contenedor principal de elementos del topbar */}  
-        <div className="topbar-main">  
+    <div className="topbar"> 
+     <form id="formTop">    
+        <div className="topbar-main">
             
-          {/* Botón del menú hamburguesa - equivalente a líneas 12-14 del original */}  
           <a href="#" id="menu-button">  
             <span className="pi pi-bars"></span>  
           </a>  
   
-          {/* Logo de la aplicación - equivalente a líneas 15-17 del original */}  
-          {/* h:link outcome="/auth/home.caems" con p:graphicImage */}  
+          {/* Logo de la aplicación */} 
           <a href="#" onClick={() => navigate('/dashboard')}>  
             <img   
-              src="/verona-layout/images/caems/CAEMS-bco.png"   
+              src="src/assets/verona-layout/images/caems/CAEMS-bco.png"   
               className="logo"   
               alt="Logo CAEMS"  
             />  
@@ -120,63 +102,44 @@ const Topbar = () => {
             />  
           </div>  
   
-          {/* Información del usuario - equivalente a líneas 28-32 del original */}  
-          {/* <a href="#" id="user-display"> con spans para username y userrole */}  
-          <a   
-            href="#"   
-            id="user-display"  
-            onClick={handleUserDisplayClick}  
-          >  
-            {/* Nombre completo del usuario - equivalente a #{administradorPaginas.usuarioSesion.nombres} etc. */}  
-            <span className="username">{getUserFullName()}</span>  
-              
-            {/* Rol del usuario - equivalente a #{administradorPaginas.usuarioSesion.idRol.nombre} */}  
-            <span className="userrole">{getUserRole()}</span>  
-              
-            {/* Avatar del usuario - equivalente a p:graphicImage name="images/avatar.png" */}  
-            <img src="/verona-layout/images/avatar.png" alt="Avatar" />  
+          {/* Información del usuario */}  
+          <a href="#" id="user-display">  
+
+            <span className="username">{getUserFullName()}</span> {/* Nombre completo del usuario */}  
+            <span className="userrole">{getUserRole()}</span>  {/* Rol del usuario */}  
+            <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />  
           </a>  
   
-          {/* Menú desplegable del usuario - equivalente a líneas 35-76 del original */}  
-          {/* <ul id="topbar-menu" class="fadeInDown animated"> */}  
-          {showUserMenu && (  
-            <ul id="topbar-menu" className="fadeInDown animated topbar-menu-visible">  
-                
-              {/* Opción: Cambio de contraseña */}  
-              {/* Equivalente a p:commandLink onclick="PF('dlgContrasena').show()" */}  
+          {/* Menú desplegable del usuario */}    
+            <ul id="topbar-menu" className="fadeInDown animated">                   
               <li>  
                 <Button  
                   label="Cambio Contraseña"  
-                  icon="pi pi-fw pi-cog"                    // Mismo icono del original  
+                  icon="pi pi-fw pi-cog"                      
                   className="p-button-text topbar-item"  
                   onClick={handlePasswordChange}  
                 />  
               </li>  
-  
-              {/* Opción: Preferencias de plataforma */}  
-              {/* Equivalente a p:commandLink onclick="PF('PreferenciasSesion').show()" */}  
               <li>  
                 <Button  
                   label="Preferencias Plataforma"  
-                  icon="pi pi-fw pi-cog"                    // Mismo icono del original  
+                  icon="pi pi-fw pi-cog"                    
                   className="p-button-text topbar-item"  
                   onClick={handlePreferences}  
                 />  
               </li>  
-  
-              {/* Opción: Salir/Logout */}  
-              {/* Equivalente a p:commandLink onclick="PF('WV_SinSesion2').show()" */}  
               <li>  
                 <Button  
                   label="Salir"  
-                  icon="pi pi-fw pi-sign-out"               // Icono más apropiado para logout  
+                  icon="pi pi-fw pi-sign-out"              
                   className="p-button-text topbar-item"  
                   onClick={handleLogout}  
                 />  
               </li>  
             </ul>  
-          )}  
-        </div>  
+        </div> 
+
+        <Menu /> {/* Componente Menu lateral */} 
       </form>  
     </div>  
   );  

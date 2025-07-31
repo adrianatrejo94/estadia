@@ -11,13 +11,26 @@ import * as crypto from 'crypto';
  */
 @Injectable()
 export class AuthService {
-  verifyToken(authHeader: string) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
-    private readonly usuariosService: UsuariosService,
     private readonly jwtService: JwtService,
+    private readonly usuariosService: UsuariosService,
   ) {}
+  async verifyToken(token: string) {
+    try {
+      // Verificar si el token es válido
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const payload = this.jwtService.verify(token);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      const user = await this.usuariosService.findById(payload.sub);
+      if (!user || !user.status || !user.idRol?.status) {
+        return null; // Usuario o rol inactivo
+      }
+      const { password: _, ...userWithoutPassword } = user; // Excluir contraseña
+      return userWithoutPassword; // Retornar usuario sin contraseña
+    } catch (error) {
+      return null; // Token inválido o error en la verificación
+    }
+  }
 
   /**
    * Valida credenciales y genera token JWT

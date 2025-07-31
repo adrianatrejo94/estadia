@@ -5,6 +5,8 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useAuth } from '../../context/AuthContext';
+import '../../assets/verona-layout/css/layout-bluegrey.css'; // o el tema que uses  
+import '../../assets/primefaces-verona-blue/theme.css'; 
 // componentes de layout 
 import Topbar from './Topbar';
 import Menu from './Menu';
@@ -17,30 +19,38 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
     const [showInactivityDialog, setShowInactivityDialog] = React.useState(false);
     const toast = useRef(null);
 
-    //comentado por mientras
     useEffect(() => {
-        // Cargar scripts de Verona - equivalente a h:outputScript  
-        //const scripts = [
-          //  '/src/assets/verona-layout/js/layout.js',
-          //  '/src/assets/verona-layout/js/prism.js',
-          //  '/src/assets/verona-layout/js/validacionesCA.js'
-       // ];
+        let jqueryScript = null;
+        let layoutScript = null;
 
-       // const loadedScripts = scripts.map(src => {
-       //     const script = document.createElement('script');
-       //     script.src = src;
-       //     script.async = true;
-       //     document.head.appendChild(script);
-       //     return script;
-       // });
 
-       // return () => {
-       //     loadedScripts.forEach(script => {
-       //         if (document.head.contains(script)) {
-       //             document.head.removeChild(script);
-       //         }
-       //     });
-       // };
+        jqueryScript = document.createElement('script');
+        jqueryScript.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+        jqueryScript.onload = () => {
+
+            //cargar script
+            layoutScript = document.createElement('script');
+            layoutScript.src = '/src/assets/verona-layout/js/layout.js';
+            layoutScript.onload = () => {
+                if (window.VeronaLayout) {
+                    window.VeronaLayout.init();
+                }
+            };
+            document.head.appendChild(layoutScript);
+        };
+
+        document.head.appendChild(jqueryScript);
+
+        return () => {
+            // Cleanup ambos scripts  
+            if (jqueryScript && document.head.contains(jqueryScript)) {
+                document.head.removeChild(jqueryScript);
+            }
+            if (layoutScript && document.head.contains(layoutScript)) {
+                document.head.removeChild(layoutScript);
+            }
+
+        };
     }, []);
 
     // Función global para mensajes - equivalente a p:growl  
@@ -79,11 +89,6 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
             <div className="layout-wrapper layout-menu-static">
                 {/* Topbar - equivalente a ui:include topbar */}
                 <Topbar />
-
-                {/* Menu lateral */}
-                <Menu />
-
-                {/* Contenido principal - equivalente a layout-main */}
                 <div className="layout-main">
                     <div className="layout-content">
                         {/* Formulario global - equivalente a h:form id="formGlobal" */}
@@ -93,8 +98,6 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
                                 ref={toast}
                                 position="top-right"
                                 life={8000}
-                                showDetail="true"
-                                showSummary="true"
                             />
 
                             {/* Contenido de la página */}
