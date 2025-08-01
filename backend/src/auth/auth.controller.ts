@@ -28,7 +28,6 @@ export class AuthController {
   }
   /**
    * Endpoint POST /auth/logout
-   * Equivalente al método salir() de ControllerLogin.java
    */
   @Post('logout')
   @HttpCode(HttpStatus.OK)

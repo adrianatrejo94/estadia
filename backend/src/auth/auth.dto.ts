@@ -3,7 +3,6 @@ import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 /**
  * DTO para validar datos de login
  * Valida automáticamente los datos que vienen de Login.jsx
- * Equivalente a las validaciones de ControllerLogin
  */
 export class LoginDto {
   @IsString()

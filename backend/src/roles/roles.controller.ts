@@ -174,10 +174,7 @@ export class RolesController {
   }
 
   /**
-   * Obtiene menús disponibles excluyendo los ya asignados
-   * Equivalente al método buscarMenusDisponibles(ids) del CatRolesRepository
-   * POST /api/roles/menus/available-excluding
-   */
+   * Obtiene menús disponibles */
   @Post('menus/available-excluding')
   getAvailableMenusExcluding(@Body() body: { excludedIds: number[] }) {
     try {
@@ -202,10 +199,7 @@ export class RolesController {
   }
 
   /**
-   * Verifica si existe duplicidad en el nombre del rol
-   * Equivalente a la lógica de verificaDuplicidad en ControllerCatRoles.guardar()
-   * GET /api/roles/check-duplicate?nombre=NOMBRE&excludeId=ID
-   */
+   * Verifica si existe duplicidad en el nombre del rol  */
   @Get('check-duplicate')
   async checkDuplicate(@Query() query: CheckDuplicateDto) {
     try {

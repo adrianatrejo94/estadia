@@ -23,11 +23,15 @@ export class UsuariosService {
   async findById(id: number): Promise<User | null> {
     return this.usersRepository.findOne({
       where: { idUsuario: id },
-      relations: ['idRol'],
+      relations: [
+        'idRol',
+        'idRol.menusRolesList',
+        'idRol.menusRolesList.idMenu',
+      ],
     });
   }
 
-  // Nuevo método para autenticación - Equivalente a CatUsuariosRepository.login()
+  // Nuevo método para autenticación
   async findByUsernameAndPassword(
     username: string,
     encryptedPassword: string,
@@ -37,7 +41,11 @@ export class UsuariosService {
         username: username,
         password: encryptedPassword,
       },
-      relations: ['idRol'],
+      relations: [
+        'idRol',
+        'idRol.menusRolesList',
+        'idRol.menusRolesList.idMenu',
+      ],
     });
   }
 

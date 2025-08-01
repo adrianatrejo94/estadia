@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -9,7 +10,7 @@ import FormButtons from "@/components/common/FormButtons";
 import { userService } from "@/services/userService";
 
 const UsuarioList = () => {
-  const { hasRole } = useAuth(); // Verifica si el usuario tiene permisos
+  const { hasAnyPermission } = useAuth(); // Verifica si el usuario tiene permisos
   const navigate = useNavigate();
 
   // Estado para guardar los usuarios obtenidos
@@ -35,10 +36,7 @@ const UsuarioList = () => {
     setLoading(true);
     try {
       // Obtener usuarios con paginación simulada
-      const data = await userService.buscar({
-        page: pagination.page,
-        size: pagination.rows,
-      });
+      const data = await userService.getAllUsers(pagination.page, pagination.rows);
       setUsuarios(data.content); // contenido real
       setPagination(prev => ({ ...prev, totalRecords: data.totalElements }));
     } catch (error) {
@@ -51,7 +49,7 @@ const UsuarioList = () => {
   // Botones de la barra superior
   const leftToolbarTemplate = () => (
     <div className="flex gap-2">
-      {hasRole("ROLE_ADMIN") && (
+      {hasAnyPermission(["ROLE_ADMIN"]) && (
         <Button
           label="Nuevo"
           icon="pi pi-plus"
@@ -73,7 +71,7 @@ const UsuarioList = () => {
     </span>
   );
 
-  // Columnas de la tabla, definidas con `useMemo` para rendimiento
+  // Columnas de la tabla
   const columns = useMemo(() => [
     { field: "username", header: "Usuario" },
     { field: "nombre", header: "Nombre" },
@@ -94,7 +92,7 @@ const UsuarioList = () => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este usuario?")) return;
     try {
-      await userService.eliminar(id);
+      await userService.deleteUser(id);
       fetchUsuarios(); // recargar datos
     } catch (error) {
       console.error("Error al eliminar usuario:", error);
