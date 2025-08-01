@@ -1,139 +1,168 @@
-
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import { Toolbar } from "primereact/toolbar";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import DataTable from "@/components/common/DataTable";
-import FormButtons from "@/components/common/FormButtons";
-import { userService } from "@/services/userService";
-
-const UsuarioList = () => {
-  const { hasAnyPermission } = useAuth(); // Verifica si el usuario tiene permisos
-  const navigate = useNavigate();
-
-  // Estado para guardar los usuarios obtenidos
-  const [usuarios, setUsuarios] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Filtros y búsqueda
-  const [globalFilter, setGlobalFilter] = useState("");
-
-  // Paginación (adaptado del arquetipo JSF)
-  const [pagination, setPagination] = useState({
-    page: 0,
-    rows: 10,
-    totalRecords: 0,
-  });
-
-  // Cargar datos al montar el componente o al cambiar página
-  useEffect(() => {
-    fetchUsuarios();
-  }, [pagination.page, pagination.rows]);
-
-  const fetchUsuarios = async () => {
-    setLoading(true);
-    try {
-      // Obtener usuarios con paginación simulada
-      const data = await userService.getAllUsers(pagination.page, pagination.rows);
-      setUsuarios(data.content); // contenido real
-      setPagination(prev => ({ ...prev, totalRecords: data.totalElements }));
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Botones de la barra superior
-  const leftToolbarTemplate = () => (
-    <div className="flex gap-2">
-      {hasAnyPermission(["ROLE_ADMIN"]) && (
-        <Button
-          label="Nuevo"
-          icon="pi pi-plus"
-          className="p-button-success"
-          onClick={() => navigate("/usuarios/form")}
-        />
-      )}
-    </div>
-  );
-
-  const rightToolbarTemplate = () => (
-    <span className="p-input-icon-left">
-      <i className="pi pi-search" />
-      <InputText
-        type="search"
-        placeholder="Buscar..."
-        onInput={e => setGlobalFilter(e.target.value)}
-      />
-    </span>
-  );
-
-  // Columnas de la tabla
-  const columns = useMemo(() => [
-    { field: "username", header: "Usuario" },
-    { field: "nombre", header: "Nombre" },
-    { field: "correo", header: "Correo" },
-    { field: "roles", header: "Roles", body: row => row.roles?.join(", ") },
-    {
-      header: "Acciones",
-      body: row => (
-        <FormButtons
-          onEdit={() => navigate(`/usuarios/form/${row.id}`)}
-          onDelete={() => handleDeleteUser(row.id)}
-        />
-      ),
-    },
-  ], []);
-
-  // Función para eliminar usuario
-  const handleDeleteUser = async (id) => {
-    if (!window.confirm("¿Estás seguro de eliminar este usuario?")) return;
-    try {
-      await userService.deleteUser(id);
-      fetchUsuarios(); // recargar datos
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error);
-    }
-  };
-
-  return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Usuarios</h2>
-
-      {/* Barra de herramientas */}
-      <Toolbar
-        className="mb-4"
-        left={leftToolbarTemplate}
-        right={rightToolbarTemplate}
-      />
-
-      {/* Tabla reutilizable */}
-      <DataTable
-        value={usuarios}
-        columns={columns}
-        loading={loading}
-        globalFilter={globalFilter}
-        paginator
-        rows={pagination.rows}
-        first={pagination.page * pagination.rows}
-        totalRecords={pagination.totalRecords}
-        onPageChange={(e) =>
-          setPagination({
-            ...pagination,
-            page: Math.floor(e.first / e.rows),
-            rows: e.rows,
-          })
-        }
-      />
-    </div>
-  );
-};
-
-export default UsuarioList;
-
-//Este componente se encargará de mostrar la lista de usuarios en una tabla, con funcionalidades de paginación, filtrado, y botones de acción para editar y eliminar, además de controlar la visibilidad de estos botones según los permisos del usuario.
-
-
+import React, { useState, useEffect } from 'react';    
+import { useNavigate } from 'react-router-dom';    
+import { Toast } from 'primereact/toast';    
+import Template from '../../components/layout/Template';    
+import DataTable from '../../components/common/DataTable';  
+import BotonesFormulario from '../../components/common/FormButtons';  
+import { useAuth } from '../../context/AuthContext';    
+import { userService } from '../../services/userService';  
+  
+/**    
+ * Componente UsuariosList - Lista de usuarios del sistema    
+ * Equivalente a base/WEB/src/main/webapp/auth/administracion/usuarios/bandeja.xhtml    
+ */    
+const UsuariosList = () => {    
+  const navigate = useNavigate();    
+  const { hasAnyPermission } = useAuth();    
+  const toast = React.useRef(null);    
+      
+  const [usuarios, setUsuarios] = useState([]);    
+  const [loading, setLoading] = useState(true);    
+    
+  useEffect(() => {    
+    loadUsuarios();    
+  }, []);    
+    
+  const loadUsuarios = async () => {    
+    try {    
+      setLoading(true);  
+      const response = await userService.getAllUsers();  
+      if (response.content) {  
+        setUsuarios(response.content);  
+      }  
+    } catch (error) {    
+      console.error('Error cargando usuarios:', error);    
+      toast.current?.show({    
+        severity: 'error',    
+        summary: 'Error',    
+        detail: 'Error al cargar los usuarios'    
+      });    
+    } finally {    
+      setLoading(false);    
+    }    
+  };    
+    
+  const handleAddNew = () => {    
+    navigate('/usuarios/nuevo');    
+  };    
+    
+  const handleEdit = (usuario) => {    
+    navigate(`/usuarios/editar/${usuario.id}`);    
+  };    
+  
+  // Template para nombre completo - igual al arquetipo  
+  const nombreBodyTemplate = (rowData) => {    
+    return (    
+      <span className="centrado">    
+        {`${rowData.nombres || ''} ${rowData.apellidoPaterno || ''} ${rowData.apellidoMaterno || ''}`.trim()}  
+      </span>    
+    );    
+  };  
+  
+  // Template para rol - igual al arquetipo  
+  const rolBodyTemplate = (rowData) => {    
+    return (    
+      <span className="centrado">    
+        {rowData.idRol?.nombre || rowData.rol?.nombre || ''}  
+      </span>    
+    );    
+  };  
+  
+  const statusBodyTemplate = (rowData) => {    
+    return (    
+      <span className="centrado">    
+        {rowData.status ? 'Activo' : 'Inactivo'}    
+      </span>    
+    );    
+  };    
+    
+  const actionBodyTemplate = (rowData) => {    
+    return (  
+      <div className="centrado">  
+        <img   
+          src="/images/caems/editar.png"  
+          style={{ width: '40px !important', cursor: 'pointer' }}  
+          title="editar"  
+          onClick={() => handleEdit(rowData)}  
+          alt="Editar"  
+        />  
+      </div>  
+    );  
+  };    
+  
+  // Definir columnas siguiendo exactamente la estructura del arquetipo  
+  const columns = [  
+    {   
+      field: "nombres",   
+      header: "Nombre",  
+      className: "centrado",  
+      body: nombreBodyTemplate,  
+      filterBy: "nombres"  
+    },  
+    {   
+      field: "username",   
+      header: "Usuario",  
+      className: "centrado",  
+      filterBy: "username"  
+    },  
+    {   
+      field: "rol",   
+      header: "Rol",  
+      className: "centrado",  
+      body: rolBodyTemplate,  
+      filterBy: "rol"  
+    },  
+    {   
+      field: "status",   
+      header: "Estatus",  
+      className: "centrado",  
+      body: statusBodyTemplate,  
+      filterBy: "status"  
+    },  
+    {   
+      header: "Modificar",  
+      className: "centrado",  
+      body: actionBodyTemplate,  
+      sortable: false  
+    }  
+  ];  
+    
+  return (    
+    <Template title="Administración Usuarios">    
+      <Toast ref={toast} />    
+          
+      <div className="usuarios-list-container">    
+        {/* Título igual al arquetipo */}  
+        <h2>Administración Usuarios</h2>  
+        <br/>  
+  
+        {/* Botón Agregar Nuevo usando el componente personalizado - equivalente a cmp:botonAgregarNuevo */}  
+        <div style={{ marginBottom: '1rem' }}>  
+          <BotonesFormulario  
+            onAdd={handleAddNew}  
+            nombreBoton="Agregar Nuevo"  
+            mostrarNuevo={true}  
+            mostrarGuardar={false}  
+            mostrarCancelar={false}  
+          />  
+        </div>  
+  
+        {/* Tabla usando el componente personalizado con configuración del arquetipo */}  
+        <DataTable  
+          data={usuarios}  
+          columns={columns}  
+          loading={loading}  
+          paginator={true}  
+          rows={5}  
+          globalFilter={true}  
+          sortable={true}  
+          reflow={true}  
+          emptyMessage="No se encontraron usuarios"  
+          className="ui-datatable-striped"  
+        />  
+      </div>    
+    </Template>    
+  );    
+};    
+    
+export default UsuariosList;

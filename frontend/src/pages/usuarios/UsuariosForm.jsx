@@ -74,14 +74,18 @@ const UsuarioForm = () => {
   };
 
   // Cargar lista de roles desde la API
-  const loadRoles = async () => {
-    try {
-      const rolesData = await userService.getRoles();
-      setRoles(rolesData);
-    } catch (error) {
-      console.error('Error al cargar roles:', error);
-    }
-  };
+  const loadRoles = async () => {  
+  try {  
+    const response = await userService.getRoles();  
+    // Extraer solo el array de datos de la respuesta  
+    setRoles(response.data || []);  
+  } catch (error) {  
+    console.error('Error al cargar roles:', error);  
+    setRoles([]); // Asegurar que siempre sea un array  
+  }  
+};
+
+
 
   // Autogenerar nombre de usuario a partir de nombre y apellido paterno
   const generateUsername = () => {
