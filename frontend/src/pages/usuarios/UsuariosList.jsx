@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';    
 import Template from '../../components/layout/Template';    
 import DataTable from '../../components/common/DataTable';  
-import BotonesFormulario from '../../components/common/FormButtons';  
+import BotonesFormulario from '../../components/common/BotonesFormulario';  
 import { useAuth } from '../../context/AuthContext';    
-import { userService } from '../../services/userService';  
+import { userService } from '../../services/userService'; 
+ 
   
 /**    
  * Componente UsuariosList - Lista de usuarios del sistema    
@@ -26,9 +27,9 @@ const UsuariosList = () => {
   const loadUsuarios = async () => {    
     try {    
       setLoading(true);  
-      const response = await userService.getAllUsers();  
-      if (response.content) {  
-        setUsuarios(response.content);  
+      const response = await userService.getAllUsers(0, 5);  
+      if (response.data) {  
+        setUsuarios(response.data);  
       }  
     } catch (error) {    
       console.error('Error cargando usuarios:', error);    
@@ -80,8 +81,8 @@ const UsuariosList = () => {
     return (  
       <div className="centrado">  
         <img   
-          src="/images/caems/editar.png"  
-          style={{ width: '40px !important', cursor: 'pointer' }}  
+          src="src/assets/verona-layout/images/caems/editar.png"  
+          style={{ width: '30px', cursor: 'pointer' }}  
           title="editar"  
           onClick={() => handleEdit(rowData)}  
           alt="Editar"  

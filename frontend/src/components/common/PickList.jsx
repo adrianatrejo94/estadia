@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';  
 import { PickList as PrimePickList } from 'primereact/picklist';  
+import '../../assets/primefaces-verona-bluegrey/theme.css';
+import '../../styles/components/PickList.css'  
   
 /**  
  * Componente PickList reutilizable  
@@ -29,7 +31,7 @@ const PickList = ({
   showTargetFilter = true,  
   showCheckbox = true,  
   filterMatchMode = "contains",  
-  responsive = true,  
+  responsive = "true",  
   disabled = false,  
   required = false,  
   className = ""  
@@ -71,14 +73,14 @@ const PickList = ({
     }  
       
     return (  
-      <div className="p-d-flex p-ai-center">  
+      <div className="picklist-item-content">  
         <span>{item.nombre || item.name || item.label || item.toString()}</span>  
       </div>  
     );  
   };  
   
   return (  
-    <div className={`picklist-wrapper ${className}`}>  
+    <div className={`verona-picklist-wrapper ${className}`}>  
       <PrimePickList  
         source={sourceItems}  
         target={targetItems}  
@@ -97,7 +99,7 @@ const PickList = ({
         filterMatchMode={filterMatchMode}  
         responsive={responsive}  
         disabled={disabled}  
-        className={`${required ? 'p-invalid' : ''}`}  
+        className={`verona-picklist ${required ? 'p-invalid' : ''}`}  
       />  
     </div>  
   );  

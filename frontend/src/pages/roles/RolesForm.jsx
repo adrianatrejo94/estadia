@@ -5,20 +5,12 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputSwitch } from 'primereact/inputswitch';    
 import { Toast } from 'primereact/toast';  
 import Template from '../../components/layout/Template';  
-import FormButtons from '../../components/common/FormButtons';  
+import FormButtons from '../../components/common/BotonesFormulario';  
 import { rolesService } from '../../services/rolesService';  
 import PickList from '../../components/common/PickList';
   
 /**  
- * Componente RoleForm - Formulario de creación/edición de roles  
- * Equivalente a base/WEB/src/main/webapp/auth/administracion/roles/formulario.xhtml  
- *   
- * Funcionalidades principales:  
- * - Formulario para crear/editar roles  
- * - PickList para selección de funciones/menús  
- * - Validación de campos requeridos  
- * - Verificación de duplicidad de nombres  
- * - Integración con FormButtons para acciones  
+ * Componente RoleForm - Formulario de creación/edición de roles   
  */  
 const RoleForm = () => {  
   const navigate = useNavigate();  
