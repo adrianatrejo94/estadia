@@ -128,7 +128,7 @@ export class RolesController {
    * DELETE /api/roles/:id
    */
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: number) {
     try {
       await this.rolesService.delete(id);
@@ -149,13 +149,12 @@ export class RolesController {
 
   /**
    * Obtiene todos los menús disponibles para asignar a roles
-   * Equivalente al método buscarTodosMenusDisponibles() del CatRolesRepository
-   * GET /api/roles/menus/available
    */
+
   @Get('menus/available')
-  getAvailableMenus() {
+  async getAvailableMenus() {
     try {
-      const menus = this.rolesService.getAvailableMenus();
+      const menus = await this.rolesService.getAvailableMenus();
       return {
         success: true,
         data: menus,
@@ -176,9 +175,9 @@ export class RolesController {
   /**
    * Obtiene menús disponibles */
   @Post('menus/available-excluding')
-  getAvailableMenusExcluding(@Body() body: { excludedIds: number[] }) {
+  async getAvailableMenusExcluding(@Body() body: { excludedIds: number[] }) {
     try {
-      const menus = this.rolesService.getAvailableMenusExcluding(
+      const menus = await this.rolesService.getAvailableMenusExcluding(
         body.excludedIds || [],
       );
       return {

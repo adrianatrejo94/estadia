@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';  
-import { Helmet } from 'react-helmet-async';  
-import { Toast } from 'primereact/toast';  
+import { Helmet } from 'react-helmet-async';   
 import { Dialog } from 'primereact/dialog';  
 import { Button } from 'primereact/button';  
 import { ProgressSpinner } from 'primereact/progressspinner';  
@@ -10,14 +9,19 @@ import '../../assets/primefaces-verona-blue/theme.css';
 // componentes de layout   
 import Topbar from './Topbar';  
 import Menu from './Menu';  
-import Footer from './Footer';  
+import Footer from './Footer';
+
+import VeronaGrowl from '../common/VeronaGrowl'; 
   
 const Template = ({ children, title = 'PrimeFaces Verona' }) => {  
     const { isAuthenticated, logout } = useAuth();  
     const [showLogoutDialog, setShowLogoutDialog] = useState(false);  
     const [showInactivityDialog, setShowInactivityDialog] = useState(false);  
     const [menuCollapsed, setMenuCollapsed] = useState(true); // Inicializar como colapsado  
-    const toast = useRef(null);  
+    
+    // Estados para el VeronaGrowl  
+    const [messages, setMessages] = useState([]);  
+    const messageIdRef = useRef(0);
   
     // Función simplificada para manejar el toggle del menú  
     const toggleMenu = () => {  
@@ -183,13 +187,25 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
     }, []);  
   
     // Función global para mensajes  
-    useEffect(() => {  
-        window.showGlobalMessage = ({ severity, summary, detail }) => {  
-            toast.current?.show({ severity, summary, detail, life: 8000 });  
-        };  
-        return () => delete window.showGlobalMessage;  
+    useEffect(() => {    
+        window.showGlobalMessage = ({ severity, summary, detail }) => {    
+            const newMessage = {  
+                id: ++messageIdRef.current,  
+                severity,  
+                summary,  
+                detail  
+            };  
+            setMessages(prev => [...prev, newMessage]);  
+        };    
+        return () => delete window.showGlobalMessage;    
     }, []);  
   
+    const removeMessage = (id) => {  
+        setMessages(prev => prev.filter(msg => msg.id !== id));  
+    }; 
+
+
+
     const handleLogout = async () => {  
         await logout();  
         setShowLogoutDialog(false);  
@@ -217,11 +233,10 @@ const Template = ({ children, title = 'PrimeFaces Verona' }) => {
                 <div className="layout-main">  
                     <div className="layout-content">  
                         <form id="formGlobal">  
-                            <Toast  
-                                ref={toast}  
-                                position="top-right"  
-                                life={8000}  
-                            />  
+                            <VeronaGrowl
+                            messages={messages}
+                            onRemove={removeMessage}
+                            />
                             {children}  
                         </form>  
                     </div>  

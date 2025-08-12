@@ -6,7 +6,8 @@ import { Toast } from 'primereact/toast';
 import Template from '../../components/layout/Template';    
 import { useAuth } from '../../context/AuthContext';    
 import rolesService from '../../services/rolesService';  
-  
+import BotonesFormulario from '../../components/common/BotonesFormulario';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 /**    
  * Componente RolesList - Lista de roles del sistema    
  * Equivalente a base/WEB/src/main/webapp/auth/administracion/roles/bandeja.xhtml    
@@ -76,6 +77,35 @@ const RolesList = () => {
   const handleEdit = (rol) => {    
     navigate(`/roles/editar/${rol.idRol}`);    
   };    
+
+
+  const handleDeleteRol = (id) => {
+      confirmDialog({
+        message: '¿Estás seguro de eliminar este rol? Esta acción no se puede deshacer.',
+        header: 'Confirmar Eliminación',
+        icon: 'pi pi-exclamation-triangle',
+        accept: async () => {
+          try {
+            await rolesService.delete(id);
+            loadRoles();  
+            toast.current?.show({
+              severity: 'success',
+              summary: 'Éxito',
+              detail: 'Rol eliminado correctamente'
+            });
+          } catch (error) {
+            console.error("Error al eliminar rol:", error);
+            toast.current?.show({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error al eliminar el rol'
+            });
+          }
+        }
+      });
+    };
+
+
   
   // Filtrar roles basado en el filtro global  
   const filteredRoles = roles.filter(rol =>   
@@ -87,23 +117,22 @@ const RolesList = () => {
   return (    
     <Template title="Administración Roles">    
       <Toast ref={toast} />    
-          
+      <ConfirmDialog />
       <div className="roles-list-container">    
         {/* Título igual al arquetipo */}  
         <h2>Administración Roles</h2>  
         <br/>  
   
-        {/* Botón Agregar Nuevo - equivalente a cmp:botonAgregarNuevo */}  
-        {hasAnyPermission(['ROLE_ALTA_ROLES']) && (  
-          <div style={{ marginBottom: '1rem' }}>  
-            <Button    
-              label="Agregar Nuevo"    
-              icon="pi pi-plus"    
-              className="p-button-success"    
-              onClick={handleAddNew}    
-            />    
-          </div>  
-        )}  
+        {/* Botón Agregar Nuevo */}
+        {hasAnyPermission(['ROLE_ALTA_ROLES']) && (
+          <BotonesFormulario
+            onAdd={handleAddNew}
+            nombreBoton="Agregar Nuevo"
+            mostrarNuevo={true}
+            mostrarGuardar={false}
+            mostrarCancelar={false}
+          />
+        )} 
   
         {/* Tabla de roles con estructura del arquetipo */}  
         {hasAnyPermission(['ROLE_BUSQUEDA_ROLES', 'ROLE_EDICION_ROLES']) && (  
@@ -157,13 +186,22 @@ const RolesList = () => {
                       <td className="centrado">  
                         {hasAnyPermission(['ROLE_EDICION_ROLES']) && (  
                           <img   
-                            src="/images/caems/editar.png"  
+                            src="src/assets/verona-layout/images/caems/editar.png"  
                             style={{ width: '40px', cursor: 'pointer' }}  
                             title="editar"  
                             onClick={() => handleEdit(rol)}  
                             alt="Editar"  
                           />  
                         )}  
+                        {hasAnyPermission(['ROLE_EDICION_ROLES']) && (
+                          <img
+                            src="src/assets/verona-layout/images/caems/eliminar.png"
+                            style={{ width: '40px', cursor: 'pointer' }}
+                            title="eliminar"
+                            onClick={() => handleDeleteRol(rol.idRol)}
+                            alt="Eliminar"
+                          />
+                        )}
                       </td>  
                     </tr>  
                   ))  

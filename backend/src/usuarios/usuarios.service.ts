@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto, UpdateUserDto } from './usuarios.dto';
+import { EmailService } from '../email/email.service';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class UsuariosService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly emailService: EmailService,
   ) {}
 
   // Métodos existentes
@@ -77,7 +79,18 @@ export class UsuariosService {
       passTmp: tempPassword,
     });
 
-    return this.usersRepository.save(user);
+    const savedUser = await this.usersRepository.save(user);
+
+    // Enviar email con contraseña temporal
+    if (createUserDto.email) {
+      await this.emailService.sendTemporaryPassword(
+        createUserDto.email,
+        savedUser.username,
+        tempPassword,
+      );
+    }
+
+    return savedUser;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

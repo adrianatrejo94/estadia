@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';  
-import '../../assets/primefaces-verona-green/theme.css'; 
-//import '../../styles/components/DataTable.css';  
+import '../../assets/primefaces-verona-bluegrey/theme.css'; 
+import '../../styles/components/DataTable.css';  
   
 const DataTable = ({  
     data = [],  //datos a mostrar en la tabla  

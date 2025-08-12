@@ -1,0 +1,53 @@
+.p-datepicker {  
+  background: #ffffff;  
+  border: 1px solid #ced4da;  
+  color: #495057;  
+  padding: 0.5rem;  
+  border-radius: 3px;  
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);  
+}  
+  
+/* Header del calendario */  
+.p-datepicker .p-datepicker-header {  
+  background: #ffffff;  
+  color: #495057;  
+  font-weight: 600;  
+  border-bottom: 1px solid #dee2e6;  
+  padding: 1rem;  
+}  
+  
+/* Botones de navegación */  
+.p-datepicker .p-datepicker-prev,  
+.p-datepicker .p-datepicker-next {  
+  width: 2rem;  
+  height: 2rem;  
+  background: transparent;  
+  color: #6c757d;  
+  border-radius: 50%;  
+  transition: background-color 0.2s, color 0.2s;  
+}  
+  
+.p-datepicker .p-datepicker-prev:hover,  
+.p-datepicker .p-datepicker-next:hover {  
+  background: #e9ecef;  
+  color: #495057;  
+}
+
+
+/* Fecha seleccionada - usando color verde de Verona */  
+.p-datepicker .p-datepicker-table td > span.p-highlight {  
+  background: #9fd037 !important;  
+  color: #ffffff !important;  
+  border-radius: 50%;  
+}  
+  
+/* Fecha de hoy */  
+.p-datepicker .p-datepicker-table td > span.p-datepicker-today {  
+  color: #81aa28;  
+  font-weight: 600;  
+}  
+  
+/* Efectos de focus */  
+.p-datepicker .p-datepicker-table td > span:focus {  
+  box-shadow: 0 0 0 0.2rem #d9ecaf;  
+}

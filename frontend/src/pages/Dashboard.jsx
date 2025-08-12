@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Chart } from 'primereact/chart';
+import { Panel } from 'primereact/panel';
+import { Calendar } from 'primereact/calendar';
+import { InputText } from 'primereact/inputtext';
 import { useAuth } from '../context/AuthContext';
 import Template from '../components/layout/Template';
+import '../styles/calendar-custom.css';
 
 /**    
  * Componente Dashboard   
@@ -167,7 +171,7 @@ const Dashboard = () => {
             <div className="card-header">
               <h5>TAREAS</h5>
             </div>
-            <div className="card-body" style={{ minHeight: '320px' }}>
+            <div className="card-body" style={{ minHeight: '360px' }}>
               <ul className="task-list">
                 {tasks.map(task => (
                   <li key={task.id}>
@@ -192,7 +196,7 @@ const Dashboard = () => {
             <div className="card-header">
               <h5>CONTÁCTANOS</h5>
             </div>
-            <div className="card-body" style={{ minHeight: '320px' }}>
+            <div className="card-body" style={{ minHeight: '306px' }}>
               {/* Remover el <form> tag */}
               <div className="grid">
                 <div className="col-12">
@@ -260,8 +264,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-
-
         {/* Lista de contactos - equivalente al contacts panel del original */}
         <div className="col-12 lg:col-4 contacts">
           <div className="card">
@@ -271,7 +273,31 @@ const Dashboard = () => {
             <div className="card-body" style={{ minHeight: '320px' }}>
               <ul>
                 <li className="clearfix">
-                  <img src="src/assets/verona-layout/images/avatar.png" width="45" alt="Avatar" />
+                  <img src="src/assets/verona-layout/images/avatar1.png" width="45" alt="Avatar" />
+                  <div className="contact-info">
+                    <span className="name">Samantha Owens</span>
+                    <span className="location">jane@pf-verona.com</span>
+                  </div>
+                  <div className="contact-actions">
+                    <span className="connection-status online">online</span>
+                    <i className="pi pi-share-alt"></i>
+                    <i className="pi pi-comments"></i>
+                  </div>
+                </li>
+                <li className="clearfix">
+                  <img src="src/assets/verona-layout/images/avatar2.png" width="45" alt="Avatar" />
+                  <div className="contact-info">
+                    <span className="name">Joshua Williams</span>
+                    <span className="location">joshua@pf-verona.com</span>
+                  </div>
+                  <div className="contact-actions">
+                    <span className="connection-status online">online</span>
+                    <i className="pi pi-share-alt"></i>
+                    <i className="pi pi-comments"></i>
+                  </div>
+                </li>
+                <li className="clearfix">
+                  <img src="src/assets/verona-layout/images/avatar3.png" width="45" alt="Avatar" />
                   <div className="contact-info">
                     <span className="name">Anna Fali</span>
                     <span className="location">anna@pf-verona.com</span>
@@ -283,13 +309,13 @@ const Dashboard = () => {
                   </div>
                 </li>
                 <li className="clearfix">
-                  <img src="src/assets/verona-layout/images/avatar3.png" width="45" alt="Avatar" />
+                  <img src="src/assets/verona-layout/images/avatar4.png" width="45" alt="Avatar" />
                   <div className="contact-info">
                     <span className="name">Tim Johnson</span>
                     <span className="location">tim@pf-verona.com</span>
                   </div>
                   <div className="contact-actions">
-                    <span className="connection-status online">online</span>
+                    <span className="connection-status offline">offline</span>
                     <i className="pi pi-share-alt"></i>
                     <i className="pi pi-comments"></i>
                   </div>
@@ -310,8 +336,8 @@ const Dashboard = () => {
               <span className="user-card-name">Samantha Owens</span>
               <span className="user-card-role">Administrador del Sistema</span>
               <p>
-                Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.
-                Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.
+                Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.
+                Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse. Dreamcatcher locavore iPhone chillwave, occupy trust fund slow-carb distillery art party narwhal.
               </p>
               <button className="ui-button ui-button-primary">
                 <span className="ui-button-text">Conectar</span>
@@ -330,6 +356,55 @@ const Dashboard = () => {
                 <div className="col-4">
                   <span>Cerrados</span>
                   <span>27</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Chat Interface - equivalente al chat del original */}
+        <div className="col-12 md:col-8 chat">
+          <div className="card">
+            <div className="card-header">
+              <h5>CHAT</h5>
+            </div>
+            <div className="card-body" style={{ minHeight: '310px' }}>
+              <ul>
+                <li className="clearfix message-from">
+                  <img src="src/assets/verona-layout/images/avatar2.png" alt="Avatar" />
+                  <span>Retro occupy organic, stumptown shabby chic pour-over roof party DIY normcore.</span>
+                </li>
+                <li className="clearfix message-own">
+                  <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />
+                  <span>Actually artisan organic occupy, Wes Anderson ugh whatever pour-over gastropub selvage.</span>
+                </li>
+                <li className="clearfix message-from">
+                  <img src="arc/assets/verona-layout/images/avatar2.png" alt="Avatar" />
+                  <span>Chillwave craft beer tote bag stumptown quinoa hashtag.</span>
+                </li>
+                <li className="clearfix message-own">
+                  <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />
+                  <span>Dreamcatcher locavore iPhone chillwave, occupy trust fund slow-carb distillery art party narwhal.</span>
+                </li>
+                <li className="clearfix message-from">
+                  <img src="src/assets/verona-layout/images/avatar2.png" alt="Avatar" />
+                  <span>Sed ut perspiciatis unde omnis iste natus.</span>
+                </li>
+                <li className="clearfix message-own">
+                  <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />
+                  <span>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse.</span>
+                </li>
+                <li className="clearfix message-from">
+                  <img src="src/assets/verona-layout/images/avatar2.png" alt="Avatar" />
+                  <span>At vero eos et accusamus.</span>
+                </li>
+              </ul>
+              <div className="new-message">
+                <div className="message-attachment">
+                  <i className="pi pi-paperclip"></i>
+                </div>
+                <div className="message-input">
+                  <InputText placeholder="Write a message" />
                 </div>
               </div>
             </div>
@@ -361,6 +436,44 @@ const Dashboard = () => {
                 <span className="event-text">Ab nobis, magnam sunt eum. Laudantium, repudiandae, similique!</span>
               </div>
 
+              <div className="col-3">
+                <span className="event-time">hace 15h</span>
+                <i className="pi pi-comment" style={{ color: '#9fd037' }}></i>
+              </div>
+              <div className="col-9">
+                <span className="event-owner" style={{ color: '#9fd037' }}>Stephan Ward</span>
+                <span className="event-text">Omnis veniam quibusdam ratione est repellat qui nam quisquam ab mollitia dolores ullam voluptates, similique, dignissimos.</span>
+              </div>
+
+              <div className="col-3">
+                <span className="event-time">hace 2d</span>
+                <i className="pi pi-globe" style={{ color: '#f7cb00' }}></i>
+              </div>
+              <div className="col-9">
+                <span className="event-owner" style={{ color: '#f7cb00' }}>Jason Smith</span>
+                <span className="event-text">Laudantium, repudiandae, similique!</span>
+                <div className="event-content">
+                  <img src="src/assets/verona-layout/images/dashboard/map.png" width="100" alt="Bridge" />
+                </div>
+              </div>
+
+              <div className="col-3">
+                <span className="event-time">hace 1w</span>
+                <i className="pi pi-heart" style={{ color: '#ff9c59' }}></i>
+              </div>
+              <div className="col-9">
+                <span className="event-owner" style={{ color: '#ff9c59' }}>Kevin Cox</span>
+                <span className="event-text">Quibusdam ratione est repellat qui nam quisquam veniam quibusdam ratione.</span>
+              </div>
+
+              <div className="col-3">
+                <span className="event-time">hace 2w</span>
+                <i className="pi pi-compass" style={{ color: '#9fd037' }}></i>
+              </div>
+              <div className="col-9">
+                <span className="event-owner" style={{ color: '#9fd037' }}>Brandon Santos</span>
+                <span className="event-text">Ab nobis, magnam sunt eum. Laudantium, repudiandae, similique!</span>
+              </div>
               <div className="col-12">
                 <button className="ui-button ui-button-primary">
                   <i className="pi pi-refresh"></i>
@@ -395,54 +508,13 @@ const Dashboard = () => {
               />
             </DataTable>
 
-            <div className="card" style={{ marginTop: '1rem' }}>
+            <div className="card" style={{ marginTop: '8rem', height: '100px' }}>
               <div className="card-header">
                 <h5>GRÁFICO DE VENTAS</h5>
               </div>
               <div className="card-body" style={{ overflow: 'auto' }}>
                 <Chart type="line" data={chartData} options={chartOptions} height="300px" />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Panel de actividades financieras */}
-        <div className="col-12 lg:col-4">
-          <div className="card">
-            <div className="card-header">
-              <h5>ACTIVIDADES</h5>
-            </div>
-            <div className="card-body" style={{ minHeight: '320px' }}>
-              <ul className="activity-list">
-                <li>
-                  <div className="count" style={{ backgroundColor: '#f18983' }}>$520</div>
-                  <div className="grid">
-                    <div className="col-6">Ingresos</div>
-                    <div className="col-6">95%</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="count" style={{ backgroundColor: '#9fd037' }}>$250</div>
-                  <div className="grid">
-                    <div className="col-6">Impuestos</div>
-                    <div className="col-6">24%</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="count" style={{ backgroundColor: '#ff9c59' }}>$125</div>
-                  <div className="grid">
-                    <div className="col-6">Facturas</div>
-                    <div className="col-6">55%</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="count" style={{ backgroundColor: '#985edb' }}>$250</div>
-                  <div className="grid">
-                    <div className="col-6">Gastos</div>
-                    <div className="col-6">15%</div>
-                  </div>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -506,18 +578,15 @@ const Dashboard = () => {
                 onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 style={{ width: '100%' }}
               />
-              <div className="calendar-placeholder" style={{
-                height: '300px',
-                border: '1px solid #dce2e7',
-                borderRadius: '3px',
-                marginTop: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#6c757d'
-              }}>
-                <span>Vista de calendario - Fecha seleccionada: {selectedDate.toLocaleDateString()}</span>
-              </div>
+              <Calendar
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.value)}
+                inline
+                showWeek
+                className="verona-calendar"
+                style={{ width: '100%' }}
+              />
+              <span>Vista de calendario - Fecha seleccionada: {selectedDate.toLocaleDateString()}</span>
             </div>
           </div>
         </div>
@@ -575,8 +644,10 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
       </div>
-    </Template>
+
+    </Template >
   );
 };
 

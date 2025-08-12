@@ -1,4 +1,5 @@
 import React from 'react';  
+import logo from '../../assets/verona-layout/images/logo-dark.png';  
   
 /**  
  * Componente Footer - Pie de página de la aplicación   
@@ -9,7 +10,7 @@ const Footer = () => {
     <div className="footer clearfix">  
       {/* Logo */}  
       <img   
-        src="src/assets/verona-layout/images/logo-dark.png"   
+        src={logo}   
         alt="Logo Verona"  
       />  
         

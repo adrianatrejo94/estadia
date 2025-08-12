@@ -5810,6 +5810,36 @@ body .ui-growl .ui-growl-item-container.ui-growl-error .ui-icon, body .ui-growl 
   color: #B71C1C;
 }
 
+
+/* Estilo para mensajes de éxito (verde) */  
+body .ui-growl .ui-growl-item-container.ui-growl-success {  
+  background: #C8E6C9;  
+  border: 1px solid #4CAF50;  
+  color: #1B5E20;  
+  border-width: 0 0 0 6px;  
+}  
+  
+body .ui-growl .ui-growl-item-container.ui-growl-success .ui-growl-image {  
+  font-family: "primeicons" !important;  
+  font-style: normal;  
+  font-weight: normal;  
+  display: inline-block;  
+  background: none;  
+  font-size: 2rem;  
+  color: #1B5E20;  
+}  
+  
+body .ui-growl .ui-growl-item-container.ui-growl-success .ui-growl-image:before {  
+  content: "\e924"; /* Icono de check */  
+}  
+  
+body .ui-growl .ui-growl-item-container.ui-growl-success .ui-icon {  
+  color: #1B5E20;  
+}
+
+
+
+
 body .ui-message {
   padding: 0.5rem 0.5rem;
   display: inline-block;
@@ -7704,3 +7734,35 @@ body .ui-wizard .ui-icon-arrowthick-1-e:before {
 }
 
 /* Add your customizations of the theme here */
+
+
+/* Animaciones para el growl */  
+@keyframes growlSlideIn {  
+  from {  
+    transform: translateX(100%);  
+    opacity: 0;  
+  }  
+  to {  
+    transform: translateX(0);  
+    opacity: 1;  
+  }  
+}  
+  
+@keyframes growlSlideOut {  
+  from {  
+    transform: translateX(0);  
+    opacity: 1;  
+  }  
+  to {  
+    transform: translateX(100%);  
+    opacity: 0;  
+  }  
+} 
+ 
+.growl-animate-in {  
+  animation: growlSlideIn 0.4s ease-out;  
+}  
+  
+.growl-animate-out {  
+  animation: growlSlideOut 0.3s ease-in;  
+}  

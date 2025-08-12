@@ -6,32 +6,32 @@ export const userService = {
     return await apiClient.get(`/usuarios?page=${page}&size=${size}`);  
   },  
   
-  // Equivalente a guardar() - líneas 126-157  
+  // Equivalente a guardar()  
   createUser: async (userData) => {  
     return await apiClient.post('/usuarios', userData);  
   },  
   
-  // Equivalente a actualizar() - líneas 160-174  
+  // Equivalente a actualizar()  
   updateUser: async (id, userData) => {  
     return await apiClient.put(`/usuarios/${id}`, userData);  
   },  
   
-  // Equivalente a cambiaPaginaEdicion() - líneas 192-196  
+  // Equivalente a cambiaPaginaEdicion() 
   getUserById: async (id) => {  
     return await apiClient.get(`/usuarios/${id}`);  
   },  
   
-  // Equivalente a buscarRoles() - líneas 83-85  
+  // Equivalente a buscarRoles()   
   getRoles: async () => {  
-    return await apiClient.get('/roles');  
+    return await apiClient.get('/usuarios/roles/available');  
   },  
   
-  // Equivalente a reestablecer() - líneas 95-103  
+  // Equivalente a reestablecer()   
   resetPassword: async (userId) => {  
-    return await apiClient.post(`/usuarios/${userId}/reset-password`);  
+    return await apiClient.put(`/usuarios/${userId}/reset-password`);  
   },  
   
-  // Función para eliminar usuario (no existe en el Java pero es común en CRUD)  
+  // Función para eliminar usuario   
   deleteUser: async (id) => {  
     return await apiClient.delete(`/usuarios/${id}`);  
   }  

@@ -1,0 +1,27 @@
+.p-confirm-dialog {  
+  background: white;  
+  border: 1px solid #ddd;  
+  border-radius: 6px;  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+  min-width: 300px;  
+}  
+  
+.p-confirm-dialog .p-dialog-header {  
+  background: #f8f9fa;  
+  border-bottom: 1px solid #dee2e6;  
+  padding: 1rem;  
+}  
+  
+.p-confirm-dialog .p-dialog-content {  
+  padding: 1.5rem;  
+}  
+  
+.p-confirm-dialog .p-dialog-footer {  
+  padding: 1rem;  
+  border-top: 1px solid #dee2e6;  
+  text-align: right;  
+}  
+  
+.p-confirm-dialog .p-button {  
+  margin-left: 0.5rem;  
+}

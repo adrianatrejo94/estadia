@@ -79,9 +79,9 @@ export const AuthProvider = ({ children }) => {
         // Establecer estado de autenticación  
         setUser(response.user);  
         setUserPermissions(extractPermissions(response.user.idRol));  
-        setIsAuthenticated(true);  
+        //setIsAuthenticated(true);  
           
-        return { success: true };  
+        return { success: true, message: 'Login exitoso' };  
       } else {  
         throw new Error('Credenciales incorrectas');  
       }  
@@ -167,6 +167,10 @@ export const AuthProvider = ({ children }) => {
     return user?.idRol?.nombre || '';  
   };  
   
+  const setAuthenticatedManually = (authenticated) => {  
+  setIsAuthenticated(authenticated);  
+}; 
+
   const value = {  
     // Estado  
     user,  
@@ -179,6 +183,8 @@ export const AuthProvider = ({ children }) => {
     login,  
     logout,  
     updatePassword,  
+
+    setAuthenticatedManually,
       
     // Funciones de permisos  
     hasPermission,  

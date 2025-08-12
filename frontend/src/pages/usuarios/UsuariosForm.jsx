@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import Template from '../../components/layout/Template';   
+import '../../styles/ConfirmDialog.css';
+import Template from '../../components/layout/Template';
 
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
@@ -9,18 +10,15 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Button } from 'primereact/button';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
-
-import { userService } from '../../services/userService';      // Servicio que gestiona llamadas al backend
-import { useAuth } from '../../context/AuthContext';           // Hook de autenticación para verificar permisos
-import BotonesFormulario from '../../components/common/BotonesFormulario'; // Componente reutilizable para botones de acción
+import { userService } from '../../services/userService';
+import { useAuth } from '../../context/AuthContext';
+import BotonesFormulario from '../../components/common/BotonesFormulario';
 
 const UsuarioForm = () => {
   // Obtener el parámetro `id` desde la URL para saber si estamos en modo edición o creación
   const { id } = useParams();
   const navigate = useNavigate();
-  const { hasPermission } = useAuth(); // Función que evalúa permisos por rol
-  const toast = useRef(null);
+  const { hasPermission, hasAnyPermission } = useAuth(); // Función que evalúa permisos por rol
 
   // Estado del formulario (campos del usuario)
   const [formData, setFormData] = useState({
@@ -54,7 +52,7 @@ const UsuarioForm = () => {
       setShowPasswordReset(true);
       try {
         const userData = await userService.getUserById(id);
-        setFormData(userData);
+        setFormData(userData.data);
       } catch (error) {
         console.error('Error al cargar usuario:', error);
         showError('Error al cargar los datos del usuario');
@@ -77,16 +75,16 @@ const UsuarioForm = () => {
   };
 
   // Cargar lista de roles desde la API
-  const loadRoles = async () => {  
-  try {  
-    const response = await userService.getRoles();  
-    // Extraer solo el array de datos de la respuesta  
-    setRoles(response.data || []);  
-  } catch (error) {  
-    console.error('Error al cargar roles:', error);  
-    setRoles([]); // Asegurar que siempre sea un array  
-  }  
-};
+  const loadRoles = async () => {
+    try {
+      const response = await userService.getRoles();
+      // Extraer solo el array de datos de la respuesta  
+      setRoles(response.data || []);
+    } catch (error) {
+      console.error('Error al cargar roles:', error);
+      setRoles([]); // Asegurar que siempre sea un array  
+    }
+  };
 
 
 
@@ -154,7 +152,10 @@ const UsuarioForm = () => {
         await userService.createUser(formData);
         showSuccess('Registro guardado correctamente, se enviará un email con la contraseña temporal');
       }
-      navigate('/usuarios');
+      setTimeout(() => {
+        navigate('/usuarios');
+      }, 1000);
+
     } catch (error) {
       console.error('Error al guardar usuario:', error);
       showError(isEditing ? 'No se pudo modificar el registro' : 'Error al guardar el usuario');
@@ -186,11 +187,19 @@ const UsuarioForm = () => {
   };
 
   const showSuccess = (message) => {
-    toast.current?.show({ severity: 'success', summary: 'Éxito', detail: message });
+    window.showGlobalMessage({
+      severity: 'success',
+      summary: 'Éxito',
+      detail: message
+    });
   };
 
   const showError = (message) => {
-    toast.current?.show({ severity: 'error', summary: 'Error', detail: message });
+    window.showGlobalMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: message
+    });
   };
 
   // Verificar permisos antes de mostrar formulario
@@ -200,145 +209,143 @@ const UsuarioForm = () => {
 
   // Render del formulario
   return (
-    <Template title={isEditing ? 'Modificar Usuario' : 'Registrar Usuario'}>  
-      <Toast ref={toast} />  
-      <ConfirmDialog />  
+    <Template title={isEditing ? 'Modificar Usuario' : 'Registrar Usuario'}>
+      <ConfirmDialog />
 
       <div className="card">
-  
-      <h2>{isEditing ? 'Modificar Usuario' : 'Registrar Usuario'}</h2>  
-  
-      {/* Estructura exacta del arquetipo: panelGrid con 4 columnas */}  
-      <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>  
-          
-        {/* Primera fila: 4 campos como en el arquetipo */}  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="nombres">nombres:*</label>  
-          <InputText  
-            id="nombres"  
-            value={formData.nombres}  
-            onChange={(e) => handleInputChange('nombres', e.target.value)}  
-            className={errors.nombres ? 'p-invalid' : ''}  
-            onBlur={generateUsername}  
-            required  
-          />  
-          {errors.nombres && <small className="p-error">{errors.nombres}</small>}  
-        </div>  
-  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="apellidoPaterno">Apelido paterno:*</label>  
-          <InputText  
-            id="apellidoPaterno"  
-            value={formData.apellidoPaterno}  
-            onChange={(e) => handleInputChange('apellidoPaterno', e.target.value)}  
-            className={errors.apellidoPaterno ? 'p-invalid' : ''}  
-            onBlur={generateUsername}  
-            required  
-          />  
-          {errors.apellidoPaterno && <small className="p-error">{errors.apellidoPaterno}</small>}  
-        </div>  
-  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="apellidoMaterno">Apelido materno*</label>  
-          <InputText  
-            id="apellidoMaterno"  
-            value={formData.apellidoMaterno}  
-            onChange={(e) => handleInputChange('apellidoMaterno', e.target.value)}  
-          />  
-        </div>  
-  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="username">Username*</label>  
-          <InputText  
-            id="username"  
-            value={formData.username}  
-            onChange={(e) => handleInputChange('username', e.target.value)}  
-          />  
-        </div>  
-  
-        {/* Segunda fila: email, teléfono, rol */}  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="email">email*</label>  
-          <InputText  
-            id="email"  
-            value={formData.email}  
-            onChange={(e) => handleInputChange('email', e.target.value)}  
-            className={errors.email ? 'p-invalid' : ''}  
-          />  
-          {errors.email && <small className="p-error">{errors.email}</small>}  
-        </div>  
-  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="telefono">telefono*</label>  
-          <InputNumber  
-            id="telefono"  
-            value={formData.telefono}  
-            onValueChange={(e) => handleInputChange('telefono', e.value)}  
-            useGrouping={false}  
-            min={10}  
-            className={errors.telefono ? 'p-invalid' : ''}  
-          />  
-          {errors.telefono && <small className="p-error">{errors.telefono}</small>}  
-        </div>  
-  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="rol">Rol*:</label>  
-          <Dropdown  
-            id="rol"  
-            value={formData.idRol}  
-            options={roles}  
-            onChange={(e) => handleInputChange('idRol', e.value)}  
-            optionLabel="nombre"  
-            placeholder="Seleccione un rol"  
-            filter  
-            filterMatchMode="startsWith"  
-            className={errors.idRol ? 'p-invalid' : ''}  
-            required  
-          />  
-          {errors.idRol && <small className="p-error">{errors.idRol}</small>}  
-        </div>  
-  
-        {/* Cuarta columna vacía en segunda fila */}  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-        </div>  
-  
-        {/* Tercera fila: Restablecer contraseña */}  
-        {showPasswordReset && (  
-          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-            <label style={{ fontSize: 'medium' }}>Reestablecer contraseña</label>  
-            <Button  
-              label="Reestablecer"  
-              onClick={handlePasswordReset}  
-              type="button"  
-              className="p-button-warning"  
-            />  
-          </div>  
-        )}  
-  
-        {/* Cuarta fila: Status */}  
-        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">  
-          <label htmlFor="status">Estatus:</label>  
-          <InputSwitch  
-            id="status"  
-            checked={formData.status}  
-            onChange={(e) => handleInputChange('status', e.value)}  
-          />  
-        </div>  
-      </div>  
-  
-      {/* Botones usando el componente equivalente a cmp:botonesFormulario */}  
-      <BotonesFormulario  
-        onSave={handleSave}  
-        onCancel={handleCancel}  
-        isEditing={isEditing}  
-        loading={loading}  
-        mostrarNuevo={false}  
-        mostrarGuardar={true}  
-        mostrarCancelar={true}  
-      />  
+
+        <h2>{isEditing ? 'Modificar Usuario' : 'Registrar Usuario'}</h2>
+
+        {/* Estructura exacta del arquetipo: panelGrid con 4 columnas */}
+        <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+
+          {/* Primera fila: 4 campos como en el arquetipo */}
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="nombres">nombres:*</label>
+            <InputText
+              id="nombres"
+              value={formData.nombres}
+              onChange={(e) => handleInputChange('nombres', e.target.value)}
+              className={errors.nombres ? 'p-invalid' : ''}
+              onBlur={generateUsername}
+              required
+            />
+            {errors.nombres && <small className="p-error">{errors.nombres}</small>}
+          </div>
+
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="apellidoPaterno">Apelido paterno:*</label>
+            <InputText
+              id="apellidoPaterno"
+              value={formData.apellidoPaterno}
+              onChange={(e) => handleInputChange('apellidoPaterno', e.target.value)}
+              className={errors.apellidoPaterno ? 'p-invalid' : ''}
+              onBlur={generateUsername}
+              required
+            />
+            {errors.apellidoPaterno && <small className="p-error">{errors.apellidoPaterno}</small>}
+          </div>
+
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="apellidoMaterno">Apelido materno*</label>
+            <InputText
+              id="apellidoMaterno"
+              value={formData.apellidoMaterno}
+              onChange={(e) => handleInputChange('apellidoMaterno', e.target.value)}
+            />
+          </div>
+
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="username">Username*</label>
+            <InputText
+              id="username"
+              value={formData.username}
+              onChange={(e) => handleInputChange('username', e.target.value)}
+            />
+          </div>
+
+          {/* Segunda fila: email, teléfono, rol */}
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="email">email*</label>
+            <InputText
+              id="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className={errors.email ? 'p-invalid' : ''}
+            />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>
+
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="telefono">telefono*</label>
+            <InputText
+              id="telefono"
+              value={formData.telefono}
+              onChange={(e) => handleInputChange('telefono', e.target.value)}
+              className={errors.telefono ? 'p-invalid' : ''}
+            />
+            {errors.telefono && <small className="p-error">{errors.telefono}</small>}
+          </div>
+
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="rol">Rol*:</label>
+            <Dropdown
+              id="rol"
+              value={formData.idRol}
+              options={roles}
+              onChange={(e) => handleInputChange('idRol', e.value)}
+              optionLabel="nombre"
+              optionValue="idRol"
+              placeholder="Seleccione un rol"
+              filter
+              filterMatchMode="startsWith"
+              className={errors.idRol ? 'p-invalid' : ''}
+              required
+            />
+            {errors.idRol && <small className="p-error">{errors.idRol}</small>}
+          </div>
+
+          {/* Cuarta columna vacía en segunda fila */}
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+          </div>
+
+          {/* Tercera fila: Restablecer contraseña */}
+          {showPasswordReset && (
+            <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+              <label style={{ fontSize: 'medium' }}>Reestablecer contraseña</label>
+              <Button
+                label="Reestablecer"
+                onClick={handlePasswordReset}
+                type="button"
+                className="p-button-warning"
+              />
+            </div>
+          )}
+
+          {/* Cuarta fila: Status */}
+          <div className="ui-panelgrid ui-panelgrid-blank ui-g sinBordes">
+            <label htmlFor="status">Estatus:</label>
+            <InputSwitch
+              id="status"
+              checked={formData.status}
+              onChange={(e) => handleInputChange('status', e.value)}
+            />
+          </div>
+        </div>
+
+        {/* Botones usando el componente equivalente a cmp:botonesFormulario */}
+        <BotonesFormulario
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isEditing={isEditing}
+          loading={loading}
+          mostrarNuevo={false}
+          mostrarGuardar={true}
+          mostrarCancelar={true}
+        />
       </div>
-    </Template>  
-    
+    </Template>
+
   );
 };
 

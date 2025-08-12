@@ -6,6 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from './role.entity';
+import { MenusRoles } from './menus-roles.entity';
+import { CatMenus } from '../menus/cat-menus.entity';
 import { CreateRoleDto, UpdateRoleDto } from './roles.dto';
 
 /**
@@ -17,6 +19,10 @@ export class RolesService {
   constructor(
     @InjectRepository(Role)
     private readonly rolesRepository: Repository<Role>,
+    @InjectRepository(MenusRoles)
+    private readonly menusRolesRepository: Repository<MenusRoles>,
+    @InjectRepository(CatMenus)
+    private readonly menusRepository: Repository<CatMenus>,
   ) {}
 
   /**
@@ -24,7 +30,12 @@ export class RolesService {
    */
   async findAll(): Promise<Role[]> {
     return this.rolesRepository.find({
-      relations: ['menusRolesList', 'catUsuariosList'],
+      relations: {
+        menusRolesList: {
+          idMenu: true,
+        },
+        catUsuariosList: true,
+      },
       order: { nombre: 'ASC' },
     });
   }
@@ -61,8 +72,24 @@ export class RolesService {
       );
     }
 
-    const role = this.rolesRepository.create(createRoleDto);
-    return this.rolesRepository.save(role);
+    const role = this.rolesRepository.create({
+      nombre: createRoleDto.nombre,
+      descripcion: createRoleDto.descripcion,
+      status: createRoleDto.status ?? true,
+    });
+
+    const savedRole = await this.rolesRepository.save(role);
+
+    // Procesar menús si existen
+    if (
+      createRoleDto.menusRolesList &&
+      createRoleDto.menusRolesList.length > 0
+    ) {
+      await this.assignMenusToRole(savedRole, createRoleDto.menusRolesList);
+    }
+
+    // Retornar el rol con sus relaciones
+    return this.findById(savedRole.idRol);
   }
 
   /**
@@ -85,8 +112,56 @@ export class RolesService {
       }
     }
 
-    Object.assign(role, updateRoleDto);
-    return this.rolesRepository.save(role);
+    // Actualizar campos básicos
+    if (updateRoleDto.nombre) role.nombre = updateRoleDto.nombre;
+    if (updateRoleDto.descripcion !== undefined)
+      role.descripcion = updateRoleDto.descripcion;
+    if (updateRoleDto.status !== undefined) role.status = updateRoleDto.status;
+
+    await this.rolesRepository.save(role);
+
+    // Actualizar menús si se proporcionaron
+    if (updateRoleDto.menusRolesList !== undefined) {
+      // Eliminar menús existentes
+      await this.menusRolesRepository.delete({ idRol: { idRol: id } });
+
+      // Asignar nuevos menús
+      if (updateRoleDto.menusRolesList.length > 0) {
+        await this.assignMenusToRole(role, updateRoleDto.menusRolesList);
+      }
+    }
+
+    return this.findById(id);
+  }
+
+  /**
+   * Asigna menús a un rol
+   */
+  private async assignMenusToRole(role: Role, menusList: any[]): Promise<void> {
+    for (const menuItem of menusList) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const menuId =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        typeof menuItem.idMenu === 'object'
+          ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            menuItem.idMenu.idMenu
+          : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, prettier/prettier
+          menuItem.idMenu;
+
+      // Verificar que el menú existe
+      const menu = await this.menusRepository.findOne({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        where: { idMenu: menuId },
+      });
+
+      if (menu) {
+        const menuRole = this.menusRolesRepository.create({
+          idMenu: menu,
+          idRol: role,
+        });
+        await this.menusRolesRepository.save(menuRole);
+      }
+    }
   }
 
   /**
@@ -94,37 +169,41 @@ export class RolesService {
    */
   async delete(id: number): Promise<void> {
     const role = await this.findById(id);
+
+    // Primero eliminar los permisos de menú asociados
+    await this.menusRolesRepository.delete({ idRol: { idRol: id } });
+
+    // Luego eliminar el rol
     await this.rolesRepository.remove(role);
   }
 
   /**
-   * Obtiene todos los menús disponibles para asignar a roles
-   * Equivalente al método buscarTodosMenusDisponibles() del CatRolesRepository
+   * Obtiene todos los menús disponibles desde la base de datos
    */
-  getAvailableMenus(): any[] {
-    // Aquí iría la lógica para obtener menús desde la entidad CatMenus
-    // Por ahora retornamos datos mock
-    return [
-      { idMenu: 1, nombre: 'Dashboard', status: true },
-      { idMenu: 2, nombre: 'Usuarios', status: true },
-      { idMenu: 3, nombre: 'Roles', status: true },
-      { idMenu: 4, nombre: 'Catálogos', status: true },
-    ];
+  async getAvailableMenus(): Promise<CatMenus[]> {
+    return this.menusRepository.find({
+      where: { status: true },
+      order: { nombre: 'ASC' },
+    });
   }
 
   /**
    * Obtiene menús disponibles excluyendo los ya asignados
-   * Equivalente al método buscarMenusDisponibles(ids) del CatRolesRepository
    */
-  getAvailableMenusExcluding(excludedIds: number[]): any[] {
-    const allMenus = this.getAvailableMenus();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-    return allMenus.filter((menu) => !excludedIds.includes(menu.idMenu));
+  async getAvailableMenusExcluding(excludedIds: number[]): Promise<CatMenus[]> {
+    const query = this.menusRepository
+      .createQueryBuilder('menu')
+      .where('menu.status = :status', { status: true });
+
+    if (excludedIds && excludedIds.length > 0) {
+      query.andWhere('menu.idMenu NOT IN (:...excludedIds)', { excludedIds });
+    }
+
+    return query.orderBy('menu.nombre', 'ASC').getMany();
   }
 
   /**
    * Verifica si existe duplicidad en el nombre del rol
-   * Equivalente a la lógica de verificaDuplicidad en ControllerCatRoles.guardar()
    */
   async checkDuplicate(nombre: string, excludeId?: number): Promise<boolean> {
     const query = this.rolesRepository

@@ -51,12 +51,13 @@ export const rolesService = {
   },  
   
   /**  
-   * Crea un nuevo rol  
-   * Equivalente al método guardar() de ControllerCatRoles cuando banderaEdicion = false  
-   */  
+   * Crea un nuevo rol */  
   async create(rolData) {  
     try {  
-      const response = await apiClient.post('/roles', rolData);  
+      const response = await apiClient.post('/roles', rolData); 
+      if (response.success !== undefined){
+        return response;
+      } 
       return {  
         success: true,  
         data: response.data || response,  
@@ -73,9 +74,7 @@ export const rolesService = {
   },  
   
   /**  
-   * Actualiza un rol existente  
-   * Equivalente al método actualizar() de ControllerCatRoles  
-   */  
+   * Actualiza un rol existente */  
   async update(id, rolData) {  
     try {  
       const response = await apiClient.put(`/roles/${id}`, rolData);  
@@ -95,9 +94,7 @@ export const rolesService = {
   },  
   
   /**  
-   * Elimina un rol  
-   * Equivalente a la funcionalidad de eliminación (si existiera en el controlador)  
-   */  
+   * Elimina un rol */  
   async delete(id) {  
     try {  
       const response = await apiClient.delete(`/roles/${id}`);  

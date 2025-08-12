@@ -1,7 +1,9 @@
 import React, { useState } from 'react';  
 import { useNavigate } from 'react-router-dom';  
-import { useAuth } from '../../context/AuthContext';  
-  
+import { useAuth } from '../../context/AuthContext'; 
+import logoVerona from '../../assets/verona-layout/images/logo-main.png'; 
+import avatar from '../../assets/verona-layout/images/avatar.png';
+
 /**        
  * Componente Topbar - Barra de navegación superior         
  */  
@@ -91,9 +93,9 @@ const Topbar = ({ toggleMenu, isMenuVisible }) => {
           navigate('/dashboard');  
         }}>  
           <img  
-            src="src/assets/verona-layout/images/caems/CAEMS-bco.png"  
+            src={logoVerona}  
             className="logo"  
-            alt="Logo CAEMS"  
+            alt="Logo Verona"  
           />  
         </a>  
   
@@ -112,7 +114,7 @@ const Topbar = ({ toggleMenu, isMenuVisible }) => {
         <a href="#" id="user-display" onClick={handleUserDisplayClick}>  
           <span className="username">{getUserFullName()}</span>  
           <span className="userrole">{getUserRole()}</span>  
-          <img src="src/assets/verona-layout/images/avatar.png" alt="Avatar" />  
+          <img src={avatar} alt="Avatar" />  
         </a>  
   
         {/* Menú desplegable del usuario */}  
