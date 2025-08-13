@@ -132,12 +132,20 @@ export class UsuariosService {
     user.primerInicio = true;
 
     await this.usersRepository.save(user);
+
+    if (user.email) {
+      await this.emailService.sendTemporaryPassword(
+        user.email,
+        user.username,
+        tempPassword,
+      );
+    }
+
     return { passTmp: tempPassword };
   }
 
   getAvailableRoles(): any[] {
     // Aquí iría la lógica para obtener roles desde RolesService
-    // Por ahora retornamos datos mock
     return [
       { idRol: 1, nombre: 'ADMINISTRADOR', status: true },
       { idRol: 2, nombre: 'OPERADOR', status: true },
