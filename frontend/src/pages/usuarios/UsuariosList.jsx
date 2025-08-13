@@ -58,7 +58,9 @@ const UsuariosList = () => {
     confirmDialog({      
       message: '¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.',      
       header: 'Confirmar Eliminación',      
-      icon: 'pi pi-exclamation-triangle',      
+      icon: 'pi pi-exclamation-triangle', 
+      acceptLabel: 'Si',
+      rejectLabel: 'No',     
       accept: async () => {      
         try {      
           await userService.deleteUser(id);      

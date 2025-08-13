@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';      
 import { InputText } from 'primereact/inputtext';      
 import { Button } from 'primereact/button';      
-import { Toast } from 'primereact/toast';      
+//import { Toast } from 'primereact/toast';      
 import Template from '../../components/layout/Template';      
 import { useAuth } from '../../context/AuthContext';      
 import rolesService from '../../services/rolesService';    
@@ -25,7 +25,7 @@ import { usePagination } from '../../hooks/usePagination';
 const RolesList = () => {      
   const navigate = useNavigate();      
   const { user, hasAnyPermission } = useAuth();      
-  const toast = React.useRef(null);      
+  //const toast = React.useRef(null);      
         
   // Estados equivalentes a ControllerCatRoles      
   const [roles, setRoles] = useState([]);      
@@ -66,16 +66,14 @@ const RolesList = () => {
   };      
       
   /**      
-   * Navega a la página de creación de nuevo rol      
-   * Equivalente a cambiaPaginaAlta() de ControllerCatRoles      
+   * Navega a la página de creación de nuevo rol            
    */      
   const handleAddNew = () => {      
     navigate('/roles/nuevo');      
   };      
       
   /**      
-   * Navega a la página de edición de rol      
-   * Equivalente a cambiaPaginaEdicion() de ControllerCatRoles      
+   * Navega a la página de edición de rol            
    */      
   const handleEdit = (rol) => {      
     navigate(`/roles/editar/${rol.idRol}`);      
@@ -85,19 +83,21 @@ const RolesList = () => {
       confirmDialog({  
         message: '¿Estás seguro de eliminar este rol? Esta acción no se puede deshacer.',  
         header: 'Confirmar Eliminación',  
-        icon: 'pi pi-exclamation-triangle',  
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Si',
+        rejectLabel: 'No',  
         accept: async () => {  
           try {  
             await rolesService.delete(id);  
             loadRoles();    
-            toast.current?.show({  
+            window.showGlobalMessage({  
               severity: 'success',  
               summary: 'Éxito',  
               detail: 'Rol eliminado correctamente'  
             });  
           } catch (error) {  
             console.error("Error al eliminar rol:", error);  
-            toast.current?.show({  
+            window.showGlobalMessage({  
               severity: 'error',  
               summary: 'Error',  
               detail: 'Error al eliminar el rol'  
@@ -126,8 +126,7 @@ const RolesList = () => {
   } = usePagination(filteredRoles);  
     
   return (      
-    <Template title="Administración Roles">      
-      <Toast ref={toast} />      
+    <Template title="Administración Roles">            
       <ConfirmDialog />  
       <div className="roles-list-container">      
         {/* Título igual al arquetipo */}    

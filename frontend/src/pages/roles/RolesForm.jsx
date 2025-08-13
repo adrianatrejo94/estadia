@@ -5,7 +5,6 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ListBox } from 'primereact/listbox';
 import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
 import Template from '../../components/layout/Template';
 import BotonesFormulario from '../../components/common/BotonesFormulario';
 import { rolesService } from '../../services/rolesService';
@@ -18,7 +17,7 @@ import '../../styles/RoleForm.css';
 const RoleForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const toast = React.useRef(null);
+  
 
   // Estados equivalentes a ControllerCatRoles  
   const [isEditing, setIsEditing] = useState(false);
@@ -237,12 +236,6 @@ const RoleForm = () => {
     }
     console.log('=== VALIDACIÓN PASÓ ===');
 
-    // Verificar duplicidad  
-    const isDuplicate = await checkDuplicateName();
-    if (isDuplicate) {
-      showError(`Ya existe un registro con el identificador: ${formData.nombre}`);
-      return;
-    }
 
     try {
       setLoading(true);
@@ -263,8 +256,6 @@ const RoleForm = () => {
         response = await rolesService.create(roleData);
       }
 
-      console.log('Response from server:', response);
-
       if (response.success) {
         showSuccess(
           isEditing ? 'Registro modificado correctamente' : 'Registro guardado correctamente'
@@ -283,8 +274,6 @@ const RoleForm = () => {
   };
 
 
-
-
   /**  
    * Maneja la cancelación  
    */
@@ -293,22 +282,20 @@ const RoleForm = () => {
   };
 
   const showError = (message) => {
-    toast.current?.show({
+    window.showGlobalMessage({
       severity: 'error',
       summary: 'Error',
       detail: message,
       life: 8000,
-      sticky: false
     });
   };
 
   const showSuccess = (message) => {
-    toast.current?.show({
+    window.showGlobalMessage({
       severity: 'success',
       summary: 'Éxito',
       detail: message,
       life: 5000,
-      sticky: false
     });
   };
 
@@ -325,7 +312,6 @@ const RoleForm = () => {
 
   return (
     <Template title={isEditing ? 'Modificar Rol' : 'Registrar Rol'}>
-      <Toast ref={toast} />
 
       <div className="role-form-container">
         <h2>{isEditing ? 'Modificar Rol' : 'Registrar Rol'}</h2>
