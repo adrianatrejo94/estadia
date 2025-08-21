@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { CreateUserDto, UpdateUserDto } from './usuarios.dto';
 import { EmailService } from '../email/email.service';
 import * as crypto from 'crypto';
+import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class UsuariosService {
@@ -12,6 +13,7 @@ export class UsuariosService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly emailService: EmailService,
+    private readonly rolesService: RolesService,
   ) {}
 
   // Métodos existentes
@@ -144,12 +146,8 @@ export class UsuariosService {
     return { passTmp: tempPassword };
   }
 
-  getAvailableRoles(): any[] {
-    // Aquí iría la lógica para obtener roles desde RolesService
-    return [
-      { idRol: 1, nombre: 'ADMINISTRADOR', status: true },
-      { idRol: 2, nombre: 'OPERADOR', status: true },
-    ];
+  async getAvailableRoles(): Promise<any[]> {
+    return await this.rolesService.findAll();
   }
 
   async checkDuplicate(
@@ -166,6 +164,39 @@ export class UsuariosService {
         "CONCAT(user.nombres, user.apellidoPaterno, COALESCE(user.apellidoMaterno, '')) = :fullName",
         { fullName },
       );
+
+    if (excludeId) {
+      query.andWhere('user.idUsuario != :excludeId', { excludeId });
+    }
+
+    const existingUser = await query.getOne();
+    return !!existingUser;
+  }
+
+  // NUEVOS MÉTODOS PARA VALIDAR UNICIDAD DE EMAIL Y TELÉFONO
+  async checkEmailDuplicate(
+    email: string,
+    excludeId?: number,
+  ): Promise<boolean> {
+    const query = this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email });
+
+    if (excludeId) {
+      query.andWhere('user.idUsuario != :excludeId', { excludeId });
+    }
+
+    const existingUser = await query.getOne();
+    return !!existingUser;
+  }
+
+  async checkTelefonoDuplicate(
+    telefono: string,
+    excludeId?: number,
+  ): Promise<boolean> {
+    const query = this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.telefono = :telefono', { telefono });
 
     if (excludeId) {
       query.andWhere('user.idUsuario != :excludeId', { excludeId });

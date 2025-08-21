@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsOptional,
   IsEmail,
+  Matches,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -28,8 +29,11 @@ export class CreateUserDto {
   email?: string;
 
   @IsString()
-  @IsOptional()
-  telefono?: string;
+  @IsNotEmpty({ message: 'El campo teléfono es requerido' })
+  @Matches(/^\d{10}$/, {
+    message: 'El teléfono debe tener exactamente 10 dígitos',
+  })
+  telefono: string;
 
   @IsBoolean()
   @IsOptional()
@@ -66,7 +70,10 @@ export class UpdateUserDto {
 
   @IsString()
   @IsOptional()
-  telefono?: string;
+  @Matches(/^\d{10}$/, {
+    message: 'El teléfono debe tener exactamente 10 dígitos',
+  })
+  telefono: string;
 
   @IsBoolean()
   @IsOptional()

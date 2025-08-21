@@ -34,5 +34,22 @@ export const userService = {
   // Función para eliminar usuario   
   deleteUser: async (id) => {  
     return await apiClient.delete(`/usuarios/${id}`);  
-  }  
+  }, 
+  
+  // NUEVOS MÉTODOS PARA VALIDACIÓN DE UNICIDAD  
+  checkEmailDuplicate: async (email, excludeId = null) => {  
+    const params = { email };  
+    if (excludeId) params.excludeId = excludeId;  
+      
+    const response = await apiClient.get('/usuarios/check-email-duplicate', { params });  
+    return response;  
+  },  
+  
+  checkTelefonoDuplicate: async (telefono, excludeId = null) => {  
+    const params = { telefono };  
+    if (excludeId) params.excludeId = excludeId;  
+      
+    const response = await apiClient.get('/usuarios/check-telefono-duplicate', { params });  
+    return response;  
+  }, 
 };

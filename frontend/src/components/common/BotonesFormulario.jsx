@@ -58,7 +58,7 @@ const BotonesFormulario = ({
         {/* BOTÓN GUARDAR/MODIFICAR */}  
         {mostrarGuardar && onSave && (  
           <button  
-            type="submit"  
+            type="button"  
             className="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-button-success"  
             onClick={onSave}  
             disabled={disabled || loading}  

@@ -8,6 +8,7 @@ import UsuarioForm from './pages/usuarios/UsuariosForm';
 import RolesList from './pages/roles/RolesList';
 import RolesForm from './pages/roles/RolesForm';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import CambioContrasena from './pages/CambioContrasena'
 
 const App = () => {
   return (
@@ -37,6 +38,9 @@ const App = () => {
           } />
           <Route path="/roles/editar/:id" element={
             <ProtectedRoute><RolesForm /></ProtectedRoute>
+          } />
+          <Route path="/cambio-contrasena" element={
+            <ProtectedRoute><CambioContrasena /></ProtectedRoute>
           } />
 
         </Routes>

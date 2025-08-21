@@ -11,10 +11,14 @@ import * as crypto from 'crypto';
  */
 @Injectable()
 export class AuthService {
+  updatePassword(token: string, newPassword: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private readonly jwtService: JwtService,
     private readonly usuariosService: UsuariosService,
   ) {}
+
   async verifyToken(token: string) {
     try {
       // Verificar si el token es válido

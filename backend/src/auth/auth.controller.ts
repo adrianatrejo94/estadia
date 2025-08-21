@@ -7,6 +7,7 @@ import {
   Get,
   Headers,
   UnauthorizedException,
+  Put,
 } from '@nestjs/common';
 import { AuthService } from './auth.services';
 import { LoginDto } from './auth.dto';
@@ -49,5 +50,23 @@ export class AuthController {
     }
 
     return { user };
+  }
+
+  /**
+   * Actualiza la contraseña del usuario actual
+   * PUT /auth/update-password
+   */
+  @Put('update-password')
+  updatePassword(
+    @Body() body: { newPassword: string },
+    @Headers('authorization') authHeader: string,
+  ) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Token no válido');
+    }
+
+    const token = authHeader.substring(7);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+    return this.authService.updatePassword(token, body.newPassword);
   }
 }
